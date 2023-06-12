@@ -32,51 +32,70 @@
   </repositories>
 
   <dependencies>
+    <!--    io.micronaut:micronaut-http-client: Dipendenza per il client HTTP di Micronaut.-->
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-client</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!--    io.micronaut:micronaut-http-server-netty: Dipendenza per il server HTTP non bloccante basato su Netty di Micronaut.-->
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server-netty</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!--    io.micronaut:micronaut-jackson-databind: Dipendenza per l'integrazione di Jackson (libreria di serializzazione JSON) con Micronaut.-->
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-jackson-databind</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!--      io.micronaut.data:micronaut-data-hibernate-jpa aggiunge l'integrazione specifica di Micronaut Data per JPA utilizzando Hibernate.-->
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-hibernate-jpa</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!--      io.micronaut.sql:micronaut-jdbc-tomcat: fornisce l'integrazione tra Micronaut e il pool di connessione tomcat per il database JDBC-->
     <dependency>
       <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbc-tomcat</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!-- io.swagger.core.v3:swagger-annotations 2.1.10: per i tag di OpenAPI per generare documentazione per le API -->
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!--    jakarta.annotation:jakarta.annotation-api: Dipendenza per le API di annotazione Jakarta.-->
     <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
       <scope>compile</scope>
     </dependency>
+
+    <!--    ch.qos.logback:logback-classic: Dipendenza per il framework di logging Logback.-->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <!--    org.postgresql:postgresql:42.2.23: Dipendenza per il driver PostgreSQL.-->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <!--    io.micronaut.test: Dipendenza per i test unitari di Micronaut con JUnit 5.-->
     <dependency>
       <groupId>io.micronaut.test</groupId>
       <artifactId>micronaut-test-junit5</artifactId>
