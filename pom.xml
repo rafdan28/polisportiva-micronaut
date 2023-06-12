@@ -60,6 +60,12 @@
       <scope>compile</scope>
     </dependency>
 
+    <!--      org.projectlombok:lombok automatizza la generazione di codice comune come getter, setter, costruttori, metodi equals e hashCode, etc...-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+
     <!--      io.micronaut.sql:micronaut-jdbc-tomcat: fornisce l'integrazione tra Micronaut e il pool di connessione tomcat per il database JDBC-->
     <dependency>
       <groupId>io.micronaut.sql</groupId>
@@ -110,10 +116,6 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
     </dependency>
   </dependencies>
 
