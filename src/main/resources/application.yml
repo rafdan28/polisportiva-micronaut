@@ -1,17 +1,39 @@
 micronaut:
   application:
-    name: polisportivaMicronaut
-datasources:
-  default:
-    driver-class-name: org.postgresql.Driver
-    db-type: postgres
-    dialect: POSTGRES
+    name: polisportiva-micronaut
+
+## Hibernate Properties
 jpa:
   default:
     properties:
       hibernate:
-        hbm2ddl:
-          auto: update
+        show_sql: true
+        format_sql: true
+        hbm2ddl.auto: update
+#jpa:
+#  default:
+#    properties:
+#      hibernate:
+#        hbm2ddl:
+#          auto: update
+
+
+#datasources:
+#  default:
+#    url: jdbc:postgresql://db:5432/polisportiva
+#    driverClassName: org.postgresql.Driver
+#    username: admin
+#    password: admin
+
+#datasources:
+#  default:
+#    url: jdbc:postgresql://localhost:5432/polisportiva
+#    driver-class-name: org.postgresql.Driver
+#    db-type: postgres
+#    dialect: POSTGRES
+#    username: postgres
+#    password: postgres
+
 netty:
   default:
     allocator:
