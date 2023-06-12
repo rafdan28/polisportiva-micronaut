@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: it.osmci.polisportiva
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [annotation-api, app-name, data, data-jpa, http-client, jackson-databind, java, java-application, jdbc-tomcat, junit, logback, maven, netty-server, openapi, postgres, readme, shade, test-resources, yaml]
