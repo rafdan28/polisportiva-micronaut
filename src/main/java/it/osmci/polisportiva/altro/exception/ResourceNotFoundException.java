@@ -1,4 +1,4 @@
-package it.osmci.polisportiva.exception;
+package it.osmci.polisportiva.altro.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 5071646428281007891L;

@@ -1,6 +1,6 @@
 package it.osmci.polisportiva.service;
 
-import it.osmci.polisportiva.exception.ResourceNotFoundException;
+import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.User;
 import it.osmci.polisportiva.repository.UserRepository;
 import jakarta.inject.Inject;

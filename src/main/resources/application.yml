@@ -25,14 +25,14 @@ jpa:
 #    username: admin
 #    password: admin
 
-#datasources:
-#  default:
-#    url: jdbc:postgresql://localhost:5432/polisportiva
-#    driver-class-name: org.postgresql.Driver
-#    db-type: postgres
-#    dialect: POSTGRES
-#    username: postgres
-#    password: postgres
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/polisportiva
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+    dialect: POSTGRES
+    username: postgres
+    password: postgres
 
 netty:
   default:

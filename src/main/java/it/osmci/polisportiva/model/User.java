@@ -7,9 +7,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity(name="Utente")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @SequenceGenerator(name = "user_seq", sequenceName = "user_id_seq", allocationSize = 1)
@@ -20,9 +24,9 @@ public class User {
 //            action = org.hibernate.annotations.OnDeleteAction.CASCADE
 //    )
 //    private Set<BillingDetailsEntity> allBillingDetails = new HashSet<>();
-//
-//    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
-//    private Set<SportsFacilityEntity> sportsFacilities = new HashSet<>();
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
+    private Set<SportsFacility> sportsFacilities = new HashSet<>();
 
     @NotBlank
     @NotNull
@@ -65,11 +69,11 @@ public class User {
 //        return allBillingDetails.add(billingDetails);
 //    }
 //
-//    public boolean addSportsFacility(SportsFacilityEntity sportsFacility) {
-//        Objects.requireNonNull(sportsFacility);
-//        sportsFacility.setOwner(this);
-//        return sportsFacilities.add(sportsFacility);
-//    }
+    public boolean addSportsFacility(SportsFacility sportsFacility) {
+        Objects.requireNonNull(sportsFacility);
+        sportsFacility.setOwner(this);
+        return sportsFacilities.add(sportsFacility);
+    }
 
 
     public Long getId() {
