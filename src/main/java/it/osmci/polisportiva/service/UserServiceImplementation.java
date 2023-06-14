@@ -1,7 +1,6 @@
 package it.osmci.polisportiva.service;
 
 import it.osmci.polisportiva.exception.ResourceNotFoundException;
-import it.osmci.polisportiva.model.Address;
 import it.osmci.polisportiva.model.User;
 import it.osmci.polisportiva.repository.UserRepository;
 import jakarta.inject.Inject;
@@ -11,6 +10,7 @@ import java.util.Objects;
 
 @Singleton
 public class UserServiceImplementation implements UserService {
+
     @Inject
     private UserRepository userRepository;
 
@@ -24,7 +24,6 @@ public class UserServiceImplementation implements UserService {
     @Override
     public User registerUser(User user) {
         Objects.requireNonNull(user);
-//        System.out.println(user.getAddress().getCity());
         return userRepository.save(user);
     }
 }
