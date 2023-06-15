@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-@NoArgsConstructor
 @Entity
 public class SportsFieldPriceList {
     @Id
@@ -44,6 +43,10 @@ public class SportsFieldPriceList {
         this(pricePerHour);
         if (priceIndoor < 0) throw new IllegalArgumentException();
         this.priceIndoor = priceIndoor;
+    }
+
+    public SportsFieldPriceList() {
+
     }
 
     public Long getId() {

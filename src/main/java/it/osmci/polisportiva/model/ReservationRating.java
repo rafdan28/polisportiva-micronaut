@@ -1,13 +1,9 @@
 package it.osmci.polisportiva.model;
 
-
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-@NoArgsConstructor
 @Entity
 public class ReservationRating {
     @Id
@@ -36,6 +32,10 @@ public class ReservationRating {
         setReservation(reservation);
         setScore(score);
         setDescription(description);
+    }
+
+    public ReservationRating() {
+
     }
 
     public void setReservation(final Reservation reservation) {

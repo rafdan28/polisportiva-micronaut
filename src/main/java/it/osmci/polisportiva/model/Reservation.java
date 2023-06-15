@@ -1,7 +1,6 @@
 package it.osmci.polisportiva.model;
 
 import it.osmci.polisportiva.altro.enumeration.ReservationStatus;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -9,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-@NoArgsConstructor
 @Entity
 @NamedQueries({
         @NamedQuery(
@@ -102,6 +100,10 @@ public class Reservation {
         setDateTimeRange(dateTimeRange);
         setPrice(price);
         setOwner(owner);
+    }
+
+    public Reservation() {
+
     }
 
     public void setDateTimeRange(final DateTimeRange dateTimeRange) {

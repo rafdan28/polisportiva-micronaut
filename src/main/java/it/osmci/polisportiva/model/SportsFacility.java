@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@NoArgsConstructor
 @Entity
 @NamedQueries({
     @NamedQuery(
@@ -63,6 +62,10 @@ public class SportsFacility {
         Objects.requireNonNull(phone);
         this.name = name;
         this.phone = phone;
+    }
+
+    public SportsFacility() {
+
     }
 
     @Override

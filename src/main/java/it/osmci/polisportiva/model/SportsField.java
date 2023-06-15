@@ -1,6 +1,5 @@
 package it.osmci.polisportiva.model;
 
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
@@ -8,7 +7,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-@NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "sport")
@@ -44,6 +42,10 @@ public class SportsField {
         Objects.requireNonNull(name);
         this.name = name;
         this.isIndoor = isIndoor;
+    }
+
+    public SportsField() {
+
     }
 
     public void setPriceList(final SportsFieldPriceList priceList) {

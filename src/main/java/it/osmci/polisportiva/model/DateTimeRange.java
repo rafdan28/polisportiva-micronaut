@@ -1,14 +1,10 @@
 package it.osmci.polisportiva.model;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @org.hibernate.annotations.Immutable
 @Embeddable
 public class DateTimeRange {
@@ -17,6 +13,11 @@ public class DateTimeRange {
 
     @Column(nullable = false)
     private ZonedDateTime endDateTime;
+
+    public DateTimeRange() {
+
+    }
+
 
     public DateTimeRange(final ZonedDateTime startDateTime, final ZonedDateTime endDateTime) {
         Objects.requireNonNull(startDateTime);
