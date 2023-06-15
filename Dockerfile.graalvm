@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY pom.xml .
 COPY src ./src
+
 RUN mvn package
 
 FROM ghcr.io/graalvm/graalvm-ce:22.3.2
@@ -11,10 +12,9 @@ FROM ghcr.io/graalvm/graalvm-ce:22.3.2
 WORKDIR /app
 
 COPY --from=builder /app/target/polisportiva-micronaut-0.1.jar polisportiva-micronaut-0.1.jar
+COPY src/main/resources/application.yml application.yml
 
 RUN gu install native-image
 
-COPY --from=builder /app/target/polisportiva-micronaut-0.1.jar polisportiva-micronaut-0.1.jar
-
-CMD ["java", "-jar", "polisportiva-micronaut-0.1.jar"]
+CMD ["java", "-jar", "polisportiva-micronaut-0.1.jar", "--micronaut.config.files=application.yml"]
 
