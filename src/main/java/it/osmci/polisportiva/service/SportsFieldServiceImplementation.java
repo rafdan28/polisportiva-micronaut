@@ -6,6 +6,8 @@ import it.osmci.polisportiva.repository.SportsFieldRepository;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.util.Objects;
+
 @Singleton
 public class SportsFieldServiceImplementation implements SportsFieldService{
 
@@ -15,5 +17,10 @@ public class SportsFieldServiceImplementation implements SportsFieldService{
     @Override
     public SportsField getSportsFieldById(Long sportsFieldId) {
         return sportsFieldRepository.findById(sportsFieldId).orElseThrow(() -> new ResourceNotFoundException("There is no sports field with this id!"));
+    }
+
+    @Override
+    public SportsField getSportsFields(Long filterByOwnerId, String sport) {
+        return sportsFieldRepository.getSportsFields(filterByOwnerId, sport);
     }
 }
