@@ -11,7 +11,7 @@ import java.util.Objects;
 @Entity
 @NamedQueries({
         @NamedQuery(
-                name = "ReservationEntity.findAll",
+                name = "Reservation.findAll",
                 query = "select r from Reservation r " +
                         "where " +
                         "(:state                          is null or :state               = r.reservationStatus)               and " +
@@ -24,7 +24,7 @@ import java.util.Objects;
                         "(:sportsFacilityId               is null or :sportsFacilityId    = r.sportsField.sportsFacility.id)"
         ),
         @NamedQuery(
-                name = "ReservationEntity.generateSportsReservationsReportForSportsFacility",
+                name = "Reservation.generateSportsReservationsReportForSportsFacility",
                 query = "select r.sportsField.sport as sport, " +
                         "coalesce(count(r.id), 0) as totalReservations, " +
                         "coalesce(sum(case when (r.reservationStatus = 'ACCEPTED') then 1 else 0 end), 0)       as acceptedReservations, " +
@@ -37,7 +37,7 @@ import java.util.Objects;
                         "group by sport"
         ),
         @NamedQuery(
-                name = "ReservationEntity.generateSportsFieldReservationsReportForSportsField",
+                name = "Reservation.generateSportsFieldReservationsReportForSportsField",
                 query = "select r.sportsField.sport as sport, " +
                         "coalesce(count(r.id), 0) as totalReservations, " +
                         "coalesce(sum(case when (r.reservationStatus = 'ACCEPTED') then 1 else 0 end), 0)       as acceptedReservations, " +
@@ -50,7 +50,7 @@ import java.util.Objects;
                         "group by sport"
         ),
         @NamedQuery(
-                name = "ReservationEntity.generateSportsReservationsReportForAllSportsFacility",
+                name = "Reservation.generateSportsReservationsReportForAllSportsFacility",
                 query = "select r.sportsField.sportsFacility.id as sportsFacilityId, " +
                         "r.sportsField.sport as sport, " +
                         "coalesce(count(r.id), 0) as totalReservations, " +
