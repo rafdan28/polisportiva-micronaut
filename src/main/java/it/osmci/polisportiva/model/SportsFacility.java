@@ -17,11 +17,11 @@ import java.util.Set;
 @Entity
 @NamedQueries({
     @NamedQuery(
-        name = "SportsFacilityEntity.findAllByTotalNumberSportsFieldsBetween",
+        name = "SportsFacility.findAllByTotalNumberSportsFieldsBetween",
         query = "SELECT sf FROM SportsFacility sf WHERE sf.totalSportsField > :min AND sf.totalSportsField < :max"
     ),
     @NamedQuery(
-        name = "SportsFacilityEntity.findAllByOwnerIdAndTotalNumberSportsFieldsBetween",
+        name = "SportsFacility.findAllByOwnerIdAndTotalNumberSportsFieldsBetween",
         query = "SELECT sf FROM SportsFacility sf WHERE sf.owner.id = :ownerId " +
                 "AND sf.totalSportsField > :min AND sf.totalSportsField < :max"
     )
