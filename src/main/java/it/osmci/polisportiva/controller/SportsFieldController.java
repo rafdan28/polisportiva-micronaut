@@ -9,16 +9,18 @@ import it.osmci.polisportiva.model.SportsField;
 import it.osmci.polisportiva.service.SportsFieldService;
 import jakarta.inject.Inject;
 
-@Controller("/api/sports-fields")
+import java.util.List;
+
+@Controller("/sports-fields")
 public class SportsFieldController {
 
     @Inject
     private SportsFieldService sportsFieldService;
 
     @Get()
-    public HttpResponse<SportsField> getSportsFields(@QueryValue Long filterByOwnerId, @QueryValue String filterBySport) {
-        final String sport = (filterBySport == null) ? null : filterBySport.toString();
-        return HttpResponse.ok(sportsFieldService.getSportsFields(filterByOwnerId, sport));
+    public HttpResponse<List<SportsField>> getSportsFields(@QueryValue Long filter_by_owner_id, @QueryValue String filter_by_sport) {
+        final String sport = (filter_by_sport == null) ? null : filter_by_sport.toString();
+        return HttpResponse.ok(sportsFieldService.getSportsFields(filter_by_owner_id, sport));
     }
 
   @Get("/{sportsFieldId}")

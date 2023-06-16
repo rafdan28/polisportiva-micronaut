@@ -6,6 +6,7 @@ import it.osmci.polisportiva.repository.SportsFieldRepository;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.util.List;
 import java.util.Objects;
 
 @Singleton
@@ -20,7 +21,7 @@ public class SportsFieldServiceImplementation implements SportsFieldService{
     }
 
     @Override
-    public SportsField getSportsFields(Long filterByOwnerId, String sport) {
+    public List<SportsField> getSportsFields(Long filterByOwnerId, String sport) {
         return sportsFieldRepository.getSportsFields(filterByOwnerId, sport);
     }
 }
