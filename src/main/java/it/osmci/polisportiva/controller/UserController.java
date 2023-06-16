@@ -11,9 +11,8 @@ import jakarta.inject.Inject;
 
 import javax.validation.Valid;
 
-@Controller("/api/users")
+@Controller("/users")
 public class UserController {
-
     @Inject
     private UserService userService;
 

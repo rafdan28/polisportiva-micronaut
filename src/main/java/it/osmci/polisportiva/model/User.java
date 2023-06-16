@@ -11,33 +11,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity(name="Utente")
+@Entity(name="users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @SequenceGenerator(name = "user_seq", sequenceName = "user_id_seq", allocationSize = 1)
     private Long id;
-
-//    @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST})
-//    @org.hibernate.annotations.OnDelete(
-//            action = org.hibernate.annotations.OnDeleteAction.CASCADE
-//    )
-//    private Set<BillingDetailsEntity> allBillingDetails = new HashSet<>();
-
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
-    private Set<SportsFacility> sportsFacilities = new HashSet<>();
-
-    @NotBlank
-    @NotNull
-    @Column(name = "fiscalCode", unique = true)
-    private String fiscalCode;
-
-    @NotBlank
-    @NotNull
-    @Email(message = "Email should be valid", regexp = "^[\\w.\\.]+@([\\w.]+\\.)+[\\w.]{2,4}$")
-    @Column(name = "email", unique = true)
-    private String email;
 
     @NotBlank
     @NotNull
@@ -48,6 +27,16 @@ public class User {
     @NotNull
     private String password;
 
+    @NotNull
+    @Embedded
+    private Address address;
+
+    @NotBlank
+    @NotNull
+    @Email(message = "Email should be valid", regexp = "^[\\w.\\.]+@([\\w.]+\\.)+[\\w.]{2,4}$")
+    @Column(name = "email", unique = true)
+    private String email;
+
     @NotBlank
     @NotNull
     private String firstName;
@@ -56,25 +45,23 @@ public class User {
     @NotNull
     private String lastName;
 
+    @NotBlank
     @NotNull
-    @Embedded
-    private Address address;
+    @Column(name = "fiscalCode", unique = true)
+    private String fiscalCode;
+
 
     @CreationTimestamp
     private LocalDateTime registeredOn;
 
-//    public boolean addBillingDetails(BillingDetailsEntity billingDetails) {
-//        Objects.requireNonNull(billingDetails);
-//        billingDetails.setOwner(this);
-//        return allBillingDetails.add(billingDetails);
-//    }
-//
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
+    private Set<SportsFacility> sportsFacilities = new HashSet<>();
+
     public boolean addSportsFacility(SportsFacility sportsFacility) {
         Objects.requireNonNull(sportsFacility);
         sportsFacility.setOwner(this);
         return sportsFacilities.add(sportsFacility);
     }
-
 
     public Long getId() {
         return id;
