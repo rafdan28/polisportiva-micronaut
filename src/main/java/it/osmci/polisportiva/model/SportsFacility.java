@@ -1,31 +1,13 @@
 package it.osmci.polisportiva.model;
 
-import lombok.NoArgsConstructor;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-@NamedQueries({
-    @NamedQuery(
-        name = "SportsFacility.findAllByTotalNumberSportsFieldsBetween",
-        query = "SELECT sf FROM SportsFacility sf WHERE sf.totalSportsField > :min AND sf.totalSportsField < :max"
-    ),
-    @NamedQuery(
-        name = "SportsFacility.findAllByOwnerIdAndTotalNumberSportsFieldsBetween",
-        query = "SELECT sf FROM SportsFacility sf WHERE sf.owner.id = :ownerId " +
-                "AND sf.totalSportsField > :min AND sf.totalSportsField < :max"
-    )
-})
 public class SportsFacility {
     @Id
     @GeneratedValue(generator = "ID_GENERATOR")
@@ -35,27 +17,21 @@ public class SportsFacility {
     private String name;
 
     @NotNull
+    private int totalSportsField;
+
+    @NotNull
     private String phone;
 
-    @NotNull
-    @Embedded
+    @ManyToOne
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    @NotNull
     @ManyToOne
-    private User owner;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @OneToMany(
-        mappedBy = "sportsFacility",
-        cascade = {CascadeType.PERSIST}
-    )
-    @OnDelete(
-        action = OnDeleteAction.CASCADE
-    )
-    @LazyCollection(LazyCollectionOption.EXTRA)
-    private Set<SportsField> sportsFields = new HashSet<>();
-
-    private int totalSportsField;
+//    @OneToMany
+//    private List<SportsField> sportsFields = new LinkedList<>();
 
     public SportsFacility(final String name, final String phone) {
         Objects.requireNonNull(name);
@@ -66,26 +42,6 @@ public class SportsFacility {
 
     public SportsFacility() {
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SportsFacility that = (SportsFacility) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
-
-    public void addSportsField(final SportsField sportsField) {
-        Objects.requireNonNull(sportsField);
-        sportsFields.add(sportsField);
-        totalSportsField++;
-        sportsField.setSportsFacility(this);
     }
 
     public Long getId() {
@@ -104,6 +60,14 @@ public class SportsFacility {
         this.name = name;
     }
 
+    public int getTotalSportsField() {
+        return totalSportsField;
+    }
+
+    public void setTotalSportsField(int totalSportsField) {
+        this.totalSportsField = totalSportsField;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -120,29 +84,21 @@ public class SportsFacility {
         this.address = address;
     }
 
-    public User getOwner() {
-        return owner;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Set<SportsField> getSportsFields() {
-        return sportsFields;
-    }
-
-    public void setSportsFields(Set<SportsField> sportsFields) {
-        this.sportsFields = sportsFields;
-    }
-
-    public int getTotalSportsField() {
-        return totalSportsField;
-    }
-
-    public void setTotalSportsField(int totalSportsField) {
-        this.totalSportsField = totalSportsField;
-    }
+//    public List<SportsField> getSportsFields() {
+//        return sportsFields;
+//    }
+//
+//    public void setSportsFields(List<SportsField> sportsFields) {
+//        this.sportsFields = sportsFields;
+//    }
 
 
 }

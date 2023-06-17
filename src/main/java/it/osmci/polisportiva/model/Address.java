@@ -1,11 +1,15 @@
 package it.osmci.polisportiva.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
-@Embeddable
+@Entity
 public class Address {
+    @Id
+    @GeneratedValue(generator = "ID_GENERATOR", strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NotNull
     @Column(nullable = false, length = 64)
     private String state;
@@ -25,6 +29,20 @@ public class Address {
     @NotNull
     @Column(nullable = false, length = 16)
     private String postcode;
+
+//    @OneToMany(mappedBy = "address")
+//    private List<User> users;
+//
+//    @OneToMany(mappedBy = "address")
+//    private List<SportsFacility> sportsFacility;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getState() {
         return state;
@@ -65,4 +83,20 @@ public class Address {
     public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
+
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
+//
+//    public List<SportsFacility> getSportsFacility() {
+//        return sportsFacility;
+//    }
+//
+//    public void setSportsFacility(List<SportsFacility> sportsFacility) {
+//        this.sportsFacility = sportsFacility;
+//    }
 }

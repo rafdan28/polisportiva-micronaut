@@ -1,15 +1,10 @@
 package it.osmci.polisportiva.model;
 
-import org.hibernate.annotations.Formula;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "sport")
 public class SportsField {
     @Id
     @GeneratedValue(generator = "ID_GENERATOR")
@@ -20,46 +15,24 @@ public class SportsField {
     @Column(unique = true)
     private String name;
 
-    @Formula(value = "sport")
     private String sport;
 
     private boolean isIndoor;
 
-    private double rating;
-
-    @NotNull
-    @OneToOne(
-            mappedBy = "sportsField",
-            cascade = {CascadeType.PERSIST}
-    )
-    private SportsFieldPriceList priceList;
-
-    @NotNull
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "sports_facility_id", nullable = false)
     private SportsFacility sportsFacility;
 
-    protected SportsField(final String name, final boolean isIndoor) {
-        Objects.requireNonNull(name);
-        this.name = name;
-        this.isIndoor = isIndoor;
-    }
+    @ManyToOne
+    @JoinColumn(name = "price_list_id", nullable = false)
+    private PriceList priceList;
 
     public SportsField() {
 
-    }
-
-    public void setPriceList(final SportsFieldPriceList priceList) {
-        Objects.requireNonNull(priceList);
-        this.priceList = priceList;
-        priceList.setSportsField(this);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        SportsField that = (SportsField) o;
-        return id != null && Objects.equals(id, that.id);
     }
 
     @Override
@@ -99,16 +72,12 @@ public class SportsField {
         isIndoor = indoor;
     }
 
-    public double getRating() {
-        return rating;
+    public User getUser() {
+        return user;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public SportsFieldPriceList getPriceList() {
-        return priceList;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public SportsFacility getSportsFacility() {
@@ -119,5 +88,11 @@ public class SportsField {
         this.sportsFacility = sportsFacility;
     }
 
+    public PriceList getPriceList() {
+        return priceList;
+    }
 
+    public void setPriceList(PriceList priceList) {
+        this.priceList = priceList;
+    }
 }

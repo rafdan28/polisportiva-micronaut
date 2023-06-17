@@ -6,135 +6,46 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(
-                name = "Reservation.findAll",
-                query = "select r from Reservation r " +
-                        "where " +
-                        "(:state                          is null or :state               = r.reservationStatus)               and " +
-                        "(:sport                          is null or :sport               = r.sportsField.sport)               and " +
-                        "(cast(:createdAt as date)        is null or :createdAt           = r.createdAt)                       and " +
-                        "(cast(:startDate as date)        is null or :startDate           <= r.dateTimeRange.startDateTime)    and " +
-                        "(cast(:endDate as date)          is null or :endDate             >= r.dateTimeRange.endDateTime)      and " +
-                        "(:price                          is null or :price               = r.price)                           and " +
-                        "(:sportsFieldId                  is null or :sportsFieldId       = r.sportsField.id)                  and " +
-                        "(:sportsFacilityId               is null or :sportsFacilityId    = r.sportsField.sportsFacility.id)"
-        ),
-        @NamedQuery(
-                name = "Reservation.generateSportsReservationsReportForSportsFacility",
-                query = "select r.sportsField.sport as sport, " +
-                        "coalesce(count(r.id), 0) as totalReservations, " +
-                        "coalesce(sum(case when (r.reservationStatus = 'ACCEPTED') then 1 else 0 end), 0)       as acceptedReservations, " +
-                        "coalesce(sum(case when (r.reservationStatus = 'REJECTED') then 1 else 0 end), 0)       as rejectedReservations, " +
-                        "coalesce(sum(case when (r.reservationStatus = 'PENDING')  then 1 else 0 end), 0)       as pendingReservations,  " +
-                        "coalesce(sum(case when (r.reservationStatus = 'ACCEPTED') then r.price else 0 end), 0) as totalRevenue          " +
-                        "from Reservation r where r.sportsField.sportsFacility.id = :sportsFacilityId                     and      " +
-                        "(cast(:startDate as date)        is null or :startDate           <= r.dateTimeRange.startDateTime)     and      " +
-                        "(cast(:endDate as date)          is null or :endDate             >= r.dateTimeRange.endDateTime)                " +
-                        "group by sport"
-        ),
-        @NamedQuery(
-                name = "Reservation.generateSportsFieldReservationsReportForSportsField",
-                query = "select r.sportsField.sport as sport, " +
-                        "coalesce(count(r.id), 0) as totalReservations, " +
-                        "coalesce(sum(case when (r.reservationStatus = 'ACCEPTED') then 1 else 0 end), 0)       as acceptedReservations, " +
-                        "coalesce(sum(case when (r.reservationStatus = 'REJECTED') then 1 else 0 end), 0)       as rejectedReservations, " +
-                        "coalesce(sum(case when (r.reservationStatus = 'PENDING')  then 1 else 0 end), 0)       as pendingReservations,  " +
-                        "coalesce(sum(case when (r.reservationStatus = 'ACCEPTED') then r.price else 0 end), 0) as totalRevenue          " +
-                        "from Reservation r where r.sportsField.id = :sportsFieldId                                            and " +
-                        "(cast(:startDate as date)         is null or :startDate           <= r.dateTimeRange.startDateTime)         and " +
-                        "(cast(:endDate as date)           is null or :endDate             >= r.dateTimeRange.endDateTime)               " +
-                        "group by sport"
-        ),
-        @NamedQuery(
-                name = "Reservation.generateSportsReservationsReportForAllSportsFacility",
-                query = "select r.sportsField.sportsFacility.id as sportsFacilityId, " +
-                        "r.sportsField.sport as sport, " +
-                        "coalesce(count(r.id), 0) as totalReservations, " +
-                        "coalesce(sum(case when (r.reservationStatus = 'ACCEPTED') then 1 else 0 end), 0)       as acceptedReservations, " +
-                        "coalesce(sum(case when (r.reservationStatus = 'REJECTED') then 1 else 0 end), 0)       as rejectedReservations, " +
-                        "coalesce(sum(case when (r.reservationStatus = 'PENDING')  then 1 else 0 end), 0)       as pendingReservations,  " +
-                        "coalesce(sum(case when (r.reservationStatus = 'ACCEPTED') then r.price else 0 end), 0) as totalRevenue          " +
-                        "from Reservation r where " +
-                        "(cast(:startDate as date)        is null or :startDate           <= r.dateTimeRange.startDateTime)          and " +
-                        "(cast(:endDate as date)          is null or :endDate             >= r.dateTimeRange.endDateTime)                " +
-                        "group by sportsFacilityId, sport"
-        )
-})
 public class Reservation {
     @Id
     @GeneratedValue(generator = "ID_GENERATOR")
     private Long id;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private ReservationStatus reservationStatus = ReservationStatus.PENDING;
+    @Column(nullable = false)
+    private ZonedDateTime startDateTime;
 
-    @NotNull
-    @Embedded
-    private DateTimeRange dateTimeRange;
-
-    @OneToOne(
-            mappedBy = "reservation",
-            cascade = CascadeType.PERSIST
-    )
-    private ReservationRating rating;
-
-    private float price;
+    @Column(nullable = false)
+    private ZonedDateTime endDateTime;
 
     @CreationTimestamp
     private ZonedDateTime createdAt;
 
     @NotNull
-    @ManyToOne
-    private User owner;
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus state = ReservationStatus.PENDING;
 
-    @NotNull
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "sports_field_id", nullable = false)
     private SportsField sportsField;
 
-    public Reservation(final DateTimeRange dateTimeRange, final float price, final User owner) {
-        setDateTimeRange(dateTimeRange);
-        setPrice(price);
-        setOwner(owner);
+    public Reservation(Long id, ZonedDateTime startDateTime, ZonedDateTime endDateTime, ZonedDateTime createdAt, ReservationStatus state, User user, SportsField sportsField) {
+        this.id = id;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.createdAt = createdAt;
+        this.state = state;
+        this.user = user;
+        this.sportsField = sportsField;
     }
 
     public Reservation() {
 
-    }
-
-    public void setDateTimeRange(final DateTimeRange dateTimeRange) {
-        Objects.requireNonNull(dateTimeRange);
-        this.dateTimeRange = dateTimeRange;
-    }
-
-    public void setPrice(final float price) {
-        if (price < 0) {
-            throw new IllegalArgumentException("The price must be greater than zero!");
-        }
-        this.price = price;
-    }
-
-    public void setOwner(final User owner) {
-        Objects.requireNonNull(owner);
-        this.owner = owner;
-    }
-
-    public void setRating(final ReservationRating rating) {
-        Objects.requireNonNull(rating);
-        if (rating.getReservation() != null) {
-            throw new IllegalArgumentException("This RatingEntity already has a reservation assigned!");
-        }
-        rating.setReservation(this);
-        this.rating = rating;
-    }
-
-    public void setSportsField(final SportsField sportsField) {
-        Objects.requireNonNull(sportsField);
-        this.sportsField = sportsField;
     }
 
     public Long getId() {
@@ -145,24 +56,20 @@ public class Reservation {
         this.id = id;
     }
 
-    public ReservationStatus getReservationStatus() {
-        return reservationStatus;
+    public ZonedDateTime getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setReservationStatus(ReservationStatus reservationStatus) {
-        this.reservationStatus = reservationStatus;
+    public void setStartDateTime(ZonedDateTime startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public DateTimeRange getDateTimeRange() {
-        return dateTimeRange;
+    public ZonedDateTime getEndDateTime() {
+        return endDateTime;
     }
 
-    public ReservationRating getRating() {
-        return rating;
-    }
-
-    public float getPrice() {
-        return price;
+    public void setEndDateTime(ZonedDateTime endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     public ZonedDateTime getCreatedAt() {
@@ -173,13 +80,27 @@ public class Reservation {
         this.createdAt = createdAt;
     }
 
-    public User getOwner() {
-        return owner;
+    public ReservationStatus getState() {
+        return state;
+    }
+
+    public void setState(ReservationStatus state) {
+        this.state = state;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public SportsField getSportsField() {
         return sportsField;
     }
 
-
+    public void setSportsField(SportsField sportsField) {
+        this.sportsField = sportsField;
+    }
 }

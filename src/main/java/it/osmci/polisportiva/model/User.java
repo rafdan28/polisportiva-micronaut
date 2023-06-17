@@ -1,21 +1,16 @@
 package it.osmci.polisportiva.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity(name="users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    @SequenceGenerator(name = "user_seq", sequenceName = "user_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GENERATOR")
+    @SequenceGenerator(name = "ID_GENERATOR", sequenceName = "ID_GENERATOR_USERS", allocationSize = 1)
     private Long id;
 
     @NotBlank
@@ -26,10 +21,6 @@ public class User {
     @NotBlank
     @NotNull
     private String password;
-
-    @NotNull
-    @Embedded
-    private Address address;
 
     @NotBlank
     @NotNull
@@ -50,18 +41,18 @@ public class User {
     @Column(name = "fiscalCode", unique = true)
     private String fiscalCode;
 
+    @ManyToOne
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address address;
 
-    @CreationTimestamp
-    private LocalDateTime registeredOn;
-
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
-    private Set<SportsFacility> sportsFacilities = new HashSet<>();
-
-    public boolean addSportsFacility(SportsFacility sportsFacility) {
-        Objects.requireNonNull(sportsFacility);
-        sportsFacility.setOwner(this);
-        return sportsFacilities.add(sportsFacility);
-    }
+//    @OneToMany
+//    private List<SportsFacility> sportsFacility = new LinkedList<>();
+//
+//    @OneToMany
+//    private List<SportsField> sportsFields = new LinkedList<>();
+//
+//    @OneToMany
+//    private List<Reservation> reservationList = new LinkedList<>();
 
     public Long getId() {
         return id;
@@ -127,11 +118,27 @@ public class User {
         this.address = homeAddress;
     }
 
-    public LocalDateTime getRegisteredOn() {
-        return registeredOn;
-    }
-
-    public void setRegisteredOn(LocalDateTime registeredOn) {
-        this.registeredOn = registeredOn;
-    }
+//    public List<SportsFacility> getSportsFacility() {
+//        return sportsFacility;
+//    }
+//
+//    public void setSportsFacility(List<SportsFacility> sportsFacility) {
+//        this.sportsFacility = sportsFacility;
+//    }
+//
+//    public List<SportsField> getSportsFields() {
+//        return sportsFields;
+//    }
+//
+//    public void setSportsFields(List<SportsField> sportsFields) {
+//        this.sportsFields = sportsFields;
+//    }
+//
+//    public List<Reservation> getReservationList() {
+//        return reservationList;
+//    }
+//
+//    public void setReservationList(List<Reservation> reservationList) {
+//        this.reservationList = reservationList;
+//    }
 }

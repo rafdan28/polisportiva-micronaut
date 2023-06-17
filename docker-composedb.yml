@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  database-local:
+    container_name: local-db
+    image: postgres:11.5
+    expose:
+      - "5433"
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: polisportiva
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+#    volumes:
+#      - ./initDb/polisportivadb.sql:/docker-entrypoint-initdb.d/init.sql

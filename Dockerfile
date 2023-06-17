@@ -1,4 +1,5 @@
 FROM maven:3.8.4 as builder
+
 WORKDIR /app
 
 COPY pom.xml .

@@ -11,7 +11,7 @@ jpa:
         format_sql: true
         hbm2ddl.auto: update
 
-## Database Properties
+# Database Properties
 datasources:
   default:
     url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
