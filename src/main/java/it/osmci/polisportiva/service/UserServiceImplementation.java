@@ -16,9 +16,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        return userRepository
-                .findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("This user id doesn't identify any user!"));
+        return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("This user id doesn't identify any user!"));
     }
 
     @Override

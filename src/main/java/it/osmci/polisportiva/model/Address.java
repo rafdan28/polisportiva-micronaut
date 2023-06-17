@@ -7,7 +7,8 @@ import java.util.List;
 @Entity
 public class Address {
     @Id
-    @GeneratedValue(generator = "ID_GENERATOR", strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GENERATOR")
+    @SequenceGenerator(name = "ID_GENERATOR", sequenceName = "ID_GENERATOR_ADDRESS", allocationSize = 1)
     private Long id;
 
     @NotNull

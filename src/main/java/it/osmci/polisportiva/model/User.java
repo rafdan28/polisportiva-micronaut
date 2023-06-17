@@ -41,7 +41,7 @@ public class User {
     @Column(name = "fiscalCode", unique = true)
     private String fiscalCode;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
