@@ -16,12 +16,30 @@ public class SportsFieldServiceImplementation implements SportsFieldService{
     private SportsFieldRepository sportsFieldRepository;
 
     @Override
+    public SportsField createSportsField(SportsField sportsField) {
+        Objects.requireNonNull(sportsField);
+        return sportsFieldRepository.save(sportsField);
+    }
+
+    @Override
+    public List<SportsField> findAll() {
+        return sportsFieldRepository.findAll();
+    }
+
+    @Override
     public SportsField getSportsFieldById(Long sportsFieldId) {
         return sportsFieldRepository.findById(sportsFieldId).orElseThrow(() -> new ResourceNotFoundException("There is no sports field with this id!"));
     }
 
     @Override
-    public List<SportsField> getSportsFields(Long filterByOwnerId, String sport) {
-        return sportsFieldRepository.getSportsFields(filterByOwnerId, sport);
+    public void deleteSportsFieldById(Long sportsFieldId) {
+        sportsFieldRepository.deleteById(sportsFieldId);
     }
+
+//    @Override
+//    public List<SportsField> getSportsFields(Long filterByOwnerId, String sport) {
+//        return sportsFieldRepository.getSportsFields(filterByOwnerId, sport);
+//    }
+
+
 }
