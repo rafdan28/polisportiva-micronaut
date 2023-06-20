@@ -6,6 +6,7 @@ import it.osmci.polisportiva.repository.UserRepository;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.util.List;
 import java.util.Objects;
 
 @Singleton
@@ -15,13 +16,24 @@ public class UserServiceImplementation implements UserService {
     private UserRepository userRepository;
 
     @Override
+    public User registerUser(User user) {
+        Objects.requireNonNull(user);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+
+    @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("This user id doesn't identify any user!"));
     }
 
     @Override
-    public User registerUser(User user) {
-        Objects.requireNonNull(user);
-        return userRepository.save(user);
+    public void deleteUserById(Long userId) {
+        userRepository.deleteById(userId);
     }
 }
