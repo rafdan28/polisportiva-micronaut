@@ -27,7 +27,7 @@ public class SportsField {
     @JoinColumn(name = "sports_facility_id", nullable = false)
     private SportsFacility sportsFacility;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "price_list_id", nullable = false)
     private PriceList priceList;
 

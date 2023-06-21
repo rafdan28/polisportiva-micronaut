@@ -3,6 +3,7 @@ package it.osmci.polisportiva.model;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -22,7 +23,7 @@ public class SportsFacility {
     @NotNull
     private String phone;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
