@@ -1,6 +1,5 @@
 package it.osmci.polisportiva.service;
 
-import io.micronaut.http.HttpResponse;
 import it.osmci.polisportiva.model.User;
 
 import java.util.List;

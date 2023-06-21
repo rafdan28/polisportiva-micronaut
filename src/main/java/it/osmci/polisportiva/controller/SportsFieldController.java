@@ -35,7 +35,7 @@ public class SportsFieldController {
     }
 
     @Delete("/{sportsFieldId}")
-    public void deleteUserById(@PathVariable Long sportsFieldId) {
+    public void deleteSportsFieldsById(@PathVariable Long sportsFieldId) {
         sportsFieldService.deleteSportsFieldById(sportsFieldId);
     }
 
