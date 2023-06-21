@@ -27,7 +27,7 @@ public class SportsFacilityServiceImplementation implements SportsFacilityServic
 
     @Override
     public SportsFacility getSportsFacilityById(Long sportsFacilityId) {
-        return sportsFacilityRepository.findById(sportsFacilityId).orElseThrow(() -> new ResourceNotFoundException("There is no sports field with this id!"));
+        return sportsFacilityRepository.findById(sportsFacilityId).orElseThrow(() -> new ResourceNotFoundException("There is no sports facility with this id!"));
     }
 
     @Override
