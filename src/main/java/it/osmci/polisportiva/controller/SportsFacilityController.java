@@ -3,7 +3,6 @@ package it.osmci.polisportiva.controller;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import it.osmci.polisportiva.model.SportsFacility;
-import it.osmci.polisportiva.model.SportsField;
 import it.osmci.polisportiva.service.SportsFacilityService;
 import jakarta.inject.Inject;
 
