@@ -15,7 +15,7 @@ public class SportsFieldController {
     @Inject
     private SportsFieldService sportsFieldService;
 
-    @Post()
+    @Post
     public HttpResponse<SportsField> createSportsField(@Body @Valid SportsField sportsField) {
         return HttpResponse.created(sportsFieldService.createSportsField(sportsField));
     }

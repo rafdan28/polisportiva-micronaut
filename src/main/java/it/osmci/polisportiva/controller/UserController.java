@@ -14,7 +14,7 @@ public class UserController {
     @Inject
     private UserService userService;
 
-    @Post()
+    @Post
     public HttpResponse<User> registerUser(@Body @Valid User user) {
         User createdUser = userService.registerUser(user);
         return HttpResponse.created(createdUser);
