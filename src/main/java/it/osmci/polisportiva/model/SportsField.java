@@ -7,7 +7,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class SportsField {
     @Id
-    @GeneratedValue(generator = "ID_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GENERATOR")
+    @SequenceGenerator(name = "ID_GENERATOR", sequenceName = "ID_GENERATOR_SPORTSFIELD", allocationSize = 1)
     private Long id;
 
     @NotNull
@@ -23,7 +24,7 @@ public class SportsField {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "sports_facility_id", nullable = false)
     private SportsFacility sportsFacility;
 

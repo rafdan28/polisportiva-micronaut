@@ -27,7 +27,7 @@ public class SportsFacility {
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
