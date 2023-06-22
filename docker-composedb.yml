@@ -4,6 +4,7 @@ services:
 
   database-local:
     container_name: local-db
+    restart: always
     image: postgres:11.5
     expose:
       - "5433"
