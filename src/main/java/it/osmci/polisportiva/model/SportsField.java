@@ -1,5 +1,8 @@
 package it.osmci.polisportiva.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,10 +27,11 @@ public class SportsField {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "sports_facility_id", nullable = false)
     private SportsFacility sportsFacility;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "price_list_id", nullable = false)
     private PriceList priceList;
