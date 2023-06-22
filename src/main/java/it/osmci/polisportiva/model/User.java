@@ -1,16 +1,22 @@
 package it.osmci.polisportiva.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
-@Entity(name="users")
+@Entity
+@Table(name="users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GENERATOR")
-    @SequenceGenerator(name = "ID_GENERATOR", sequenceName = "ID_GENERATOR_USERS", allocationSize = 1)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_USERS")
+    @SequenceGenerator(name = "ID_USERS", sequenceName = "ID_GENERATOR_USERS", allocationSize = 1)
     private Long id;
 
     @NotBlank
@@ -42,17 +48,23 @@ public class User {
     private String fiscalCode;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-//    @OneToMany
-//    private List<SportsFacility> sportsFacility = new LinkedList<>();
-//
-//    @OneToMany
-//    private List<SportsField> sportsFields = new LinkedList<>();
-//
-//    @OneToMany
-//    private List<Reservation> reservationList = new LinkedList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<SportsFacility> sportsFacility = new LinkedList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<SportsField> sportsFields = new LinkedList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Reservation> reservationList = new LinkedList<>();
 
     public Long getId() {
         return id;
@@ -118,27 +130,27 @@ public class User {
         this.address = homeAddress;
     }
 
-//    public List<SportsFacility> getSportsFacility() {
-//        return sportsFacility;
-//    }
-//
-//    public void setSportsFacility(List<SportsFacility> sportsFacility) {
-//        this.sportsFacility = sportsFacility;
-//    }
-//
-//    public List<SportsField> getSportsFields() {
-//        return sportsFields;
-//    }
-//
-//    public void setSportsFields(List<SportsField> sportsFields) {
-//        this.sportsFields = sportsFields;
-//    }
-//
-//    public List<Reservation> getReservationList() {
-//        return reservationList;
-//    }
-//
-//    public void setReservationList(List<Reservation> reservationList) {
-//        this.reservationList = reservationList;
-//    }
+    public List<SportsFacility> getSportsFacility() {
+        return sportsFacility;
+    }
+
+    public void setSportsFacility(List<SportsFacility> sportsFacility) {
+        this.sportsFacility = sportsFacility;
+    }
+
+    public List<SportsField> getSportsFields() {
+        return sportsFields;
+    }
+
+    public void setSportsFields(List<SportsField> sportsFields) {
+        this.sportsFields = sportsFields;
+    }
+
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
+    }
 }

@@ -1,17 +1,20 @@
 package it.osmci.polisportiva.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 public class SportsField {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GENERATOR")
-    @SequenceGenerator(name = "ID_GENERATOR", sequenceName = "ID_GENERATOR_SPORTSFIELD", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_SPORTSFIELD")
+    @SequenceGenerator(name = "ID_SPORTSFIELD", sequenceName = "ID_GENERATOR_SPORTSFIELD", allocationSize = 1)
     private Long id;
 
     @NotNull
@@ -23,27 +26,23 @@ public class SportsField {
 
     private boolean isIndoor;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "sports_facility_id", nullable = false)
     private SportsFacility sportsFacility;
 
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "price_list_id", nullable = false)
     private PriceList priceList;
 
-    public SportsField() {
-
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "sportsField", cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Reservation> reservationList = new LinkedList<>();
 
     public Long getId() {
         return id;
@@ -99,5 +98,13 @@ public class SportsField {
 
     public void setPriceList(PriceList priceList) {
         this.priceList = priceList;
+    }
+
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
     }
 }

@@ -1,18 +1,13 @@
 package it.osmci.polisportiva.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import java.util.LinkedList;
-import java.util.List;
 
 @Entity
 public class PriceList {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GENERATOR")
-    @SequenceGenerator(name = "ID_GENERATOR", sequenceName = "ID_GENERATOR_PRICE", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_PRICE")
+    @SequenceGenerator(name = "ID_PRICE", sequenceName = "ID_GENERATOR_PRICE", allocationSize = 1)
     private Long id;
 
     @Min(value = 0)

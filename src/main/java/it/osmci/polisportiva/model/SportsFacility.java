@@ -1,5 +1,6 @@
 package it.osmci.polisportiva.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
@@ -11,7 +12,8 @@ import java.util.*;
 @Entity
 public class SportsFacility {
     @Id
-    @GeneratedValue(generator = "ID_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_SPORTSFACILITY")
+    @SequenceGenerator(name = "ID_SPORTSFACILITY", sequenceName = "ID_GENERATOR_SPORTSFACILITY", allocationSize = 1)
     private Long id;
 
     @NotNull
@@ -24,26 +26,18 @@ public class SportsFacility {
     private String phone;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 
-//    @OneToMany
-//    private List<SportsField> sportsFields = new LinkedList<>();
-
-    public SportsFacility(final String name, final String phone) {
-        Objects.requireNonNull(name);
-        Objects.requireNonNull(phone);
-        this.name = name;
-        this.phone = phone;
-    }
-
-    public SportsFacility() {
-
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "sportsFacility", cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<SportsField> sportsFields = new LinkedList<>();
 
     public Long getId() {
         return id;
@@ -85,21 +79,19 @@ public class SportsFacility {
         this.address = address;
     }
 
-    public User getUser() {
-        return user;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
-//    public List<SportsField> getSportsFields() {
-//        return sportsFields;
-//    }
-//
-//    public void setSportsFields(List<SportsField> sportsFields) {
-//        this.sportsFields = sportsFields;
-//    }
+    public List<SportsField> getSportsFields() {
+        return sportsFields;
+    }
 
-
+    public void setSportsFields(List<SportsField> sportsFields) {
+        this.sportsFields = sportsFields;
+    }
 }

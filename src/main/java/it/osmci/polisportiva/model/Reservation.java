@@ -10,8 +10,8 @@ import java.time.ZonedDateTime;
 @Entity
 public class Reservation {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GENERATOR")
-    @SequenceGenerator(name = "ID_GENERATOR", sequenceName = "ID_GENERATOR_RESERVATION", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_RESERVATION")
+    @SequenceGenerator(name = "ID_RESERVATION", sequenceName = "ID_GENERATOR_RESERVATION", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)
@@ -27,27 +27,13 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus state = ReservationStatus.PENDING;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "sports_field_id", nullable = false)
     private SportsField sportsField;
-
-    public Reservation(Long id, ZonedDateTime startDateTime, ZonedDateTime endDateTime, ZonedDateTime createdAt, ReservationStatus state, User user, SportsField sportsField) {
-        this.id = id;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-        this.createdAt = createdAt;
-        this.state = state;
-        this.user = user;
-        this.sportsField = sportsField;
-    }
-
-    public Reservation() {
-
-    }
 
     public Long getId() {
         return id;

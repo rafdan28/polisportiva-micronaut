@@ -2,13 +2,12 @@ package it.osmci.polisportiva.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_GENERATOR")
-    @SequenceGenerator(name = "ID_GENERATOR", sequenceName = "ID_GENERATOR_ADDRESS", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ID_ADDRESS")
+    @SequenceGenerator(name = "ID_ADDRESS", sequenceName = "ID_GENERATOR_ADDRESS", allocationSize = 1)
     private Long id;
 
     @NotNull
