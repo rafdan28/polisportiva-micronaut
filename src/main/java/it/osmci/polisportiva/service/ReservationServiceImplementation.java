@@ -3,7 +3,6 @@ package it.osmci.polisportiva.service;
 import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.Reservation;
 import it.osmci.polisportiva.model.ReservationRating;
-import it.osmci.polisportiva.model.SportsFacility;
 import it.osmci.polisportiva.repository.ReservationRepository;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;

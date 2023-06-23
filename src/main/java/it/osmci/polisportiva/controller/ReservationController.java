@@ -5,7 +5,6 @@ import io.micronaut.http.annotation.*;
 import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.Reservation;
 import it.osmci.polisportiva.model.ReservationRating;
-import it.osmci.polisportiva.model.SportsField;
 import it.osmci.polisportiva.service.ReservationService;
 import jakarta.inject.Inject;
 
