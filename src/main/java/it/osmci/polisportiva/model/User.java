@@ -64,6 +64,7 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Reservation> reservationList = new LinkedList<>();
 
     public Long getId() {
