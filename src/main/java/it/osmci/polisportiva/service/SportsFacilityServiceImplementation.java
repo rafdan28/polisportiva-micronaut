@@ -51,7 +51,7 @@ public class SportsFacilityServiceImplementation implements SportsFacilityServic
     }
 
     @Override
-    public SportsFacility getSportsFacilityByOwnerId(Long ownerId) {
+    public List<SportsFacility> getSportsFacilityByOwnerId(Long ownerId) {
         return sportsFacilityRepository.getSportsFacilityByOwnerId(ownerId);
     }
 

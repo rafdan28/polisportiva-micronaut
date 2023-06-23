@@ -55,14 +55,19 @@ public class SportsFacilityController {
 
     @Get("/filter_by_owner/{ownerId}")
     public HttpResponse<Object> getSportsFacilityByOwnerId(@PathVariable Long ownerId) {
-        try{
-            SportsFacility sportsFacility = sportsFacilityServices.getSportsFacilityByOwnerId(ownerId);
-            if (sportsFacility == null) {
-                return HttpResponse.notFound(new ResourceNotFoundException("There are no user-associated sports facility with this id!"));
+        try {
+            List<SportsFacility> sportsFacilityList = sportsFacilityServices.getSportsFacilityByOwnerId(ownerId);
+            if (sportsFacilityList.size() != 0) {
+                return HttpResponse.ok(sportsFacilityList);
+            } else {
+                ResourceNotFoundException customException = new ResourceNotFoundException("There are no user-associated sports facility with this id!");
+                customException.setStackTrace(new StackTraceElement[0]);
+                return HttpResponse.notFound(customException);
             }
-            return HttpResponse.ok(sportsFacility);
         }
         catch (Exception e){
+            Exception customException = new Exception(e.getMessage());
+            customException.setStackTrace(new StackTraceElement[0]);
             return HttpResponse.notFound(new ResourceNotFoundException("There are no user-associated sports facility with this id!"));
         }
 

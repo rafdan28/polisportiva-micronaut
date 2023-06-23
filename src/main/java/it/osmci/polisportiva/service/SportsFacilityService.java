@@ -10,7 +10,7 @@ public interface SportsFacilityService {
     SportsField createSportsFieldBySportsFacility(Long sportsFacilityId, SportsField sportsField);
     List<SportsFacility> findAll();
     SportsFacility getSportsFacilityById(Long sportsFacilityId);
-    SportsFacility getSportsFacilityByOwnerId(Long ownerId);
+    List<SportsFacility> getSportsFacilityByOwnerId(Long ownerId);
     void deleteSportsFacilityById(Long sportsFacilityId);
 
 }
