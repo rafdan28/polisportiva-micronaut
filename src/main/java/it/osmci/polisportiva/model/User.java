@@ -58,7 +58,7 @@ public class User {
     private List<SportsFacility> sportsFacility = new LinkedList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<SportsField> sportsFields = new LinkedList<>();
 

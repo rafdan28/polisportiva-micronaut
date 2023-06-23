@@ -30,7 +30,7 @@ public class SportsFacilityServiceImplementation implements SportsFacilityServic
             SportsFacility sportsFacility = getSportsFacilityById(sportsFacilityId);
             if(sportsFacility != null){
                 sportsField.setSportsFacility(sportsFacility);
-                sportsField.setUser(sportsFacility.getOwner());
+                sportsField.setOwner(sportsFacility.getOwner());
                 return sportsFieldService.createSportsField(sportsField);
             }
             return null;

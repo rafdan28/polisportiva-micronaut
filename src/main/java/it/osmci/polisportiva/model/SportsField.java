@@ -33,8 +33,8 @@ public class SportsField {
     private String tennisFieldType;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "sports_facility_id", nullable = false)
@@ -98,12 +98,12 @@ public class SportsField {
         this.tennisFieldType = tennisFieldType;
     }
 
-    public User getUser() {
-        return user;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(User user) {
+        this.owner = user;
     }
 
     public SportsFacility getSportsFacility() {
