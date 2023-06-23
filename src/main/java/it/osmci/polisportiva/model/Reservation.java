@@ -27,6 +27,9 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus state = ReservationStatus.PENDING;
 
+    @OneToOne(mappedBy = "reservation", cascade  = CascadeType.PERSIST)
+    private ReservationRating rating;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
