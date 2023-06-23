@@ -32,14 +32,17 @@ public class SportsFieldServiceImplementation implements SportsFieldService{
     }
 
     @Override
+    public List<SportsField> getSportsFieldsByOwnerIdBySport(Long ownerId, String sport) {
+        try {
+            return sportsFieldRepository.getSportsFieldsByOwnerIdBySport(ownerId, sport);
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
+    @Override
     public void deleteSportsFieldById(Long sportsFieldId) {
         sportsFieldRepository.deleteById(sportsFieldId);
     }
-
-//    @Override
-//    public List<SportsField> getSportsFields(Long filterByOwnerId, String sport) {
-//        return sportsFieldRepository.getSportsFields(filterByOwnerId, sport);
-//    }
-
-
 }
