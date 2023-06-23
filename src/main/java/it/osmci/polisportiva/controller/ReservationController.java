@@ -2,6 +2,7 @@ package it.osmci.polisportiva.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
+import it.osmci.polisportiva.altro.enumeration.ReservationStatus;
 import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.Reservation;
 import it.osmci.polisportiva.model.ReservationRating;
@@ -51,6 +52,24 @@ public class ReservationController {
     @Get("/{reservationId}")
     public HttpResponse<Reservation> getReservationById(@PathVariable Long reservationId) {
         return HttpResponse.ok(reservationService.getReservationById(reservationId));
+    }
+
+    @Put("/{reservationId}/status/{state}")
+    public HttpResponse<Object> updateReservationStatusById(@PathVariable Long reservationId, @PathVariable ReservationStatus state){
+        try {
+            Reservation reservation = reservationService.updateReservationStatusById(reservationId, state);
+            if (reservation == null) {
+                ResourceNotFoundException customException = new ResourceNotFoundException("There is no reservation with this id!");
+                customException.setStackTrace(new StackTraceElement[0]);
+                return HttpResponse.notFound(customException);
+            }
+            return HttpResponse.ok(reservation);
+        }
+        catch (Exception e){
+            Exception customException = new Exception(e.getMessage());
+            customException.setStackTrace(new StackTraceElement[0]);
+            return HttpResponse.notFound(customException);
+        }
     }
 
     @Delete("/{reservationId}")

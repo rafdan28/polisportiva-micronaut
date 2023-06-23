@@ -1,5 +1,6 @@
 package it.osmci.polisportiva.service;
 
+import it.osmci.polisportiva.altro.enumeration.ReservationStatus;
 import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.Reservation;
 import it.osmci.polisportiva.model.ReservationRating;
@@ -47,6 +48,21 @@ public class ReservationServiceImplementation implements ReservationService {
     @Override
     public Reservation getReservationById(Long reservationId) {
         return reservationRepository.findById(reservationId).orElseThrow(() -> new ResourceNotFoundException("There is no reservation with this id!"));
+    }
+
+    @Override
+    public Reservation updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus) {
+        try {
+            Reservation reservation = getReservationById(reservationId);
+            if(reservation != null){
+                reservation.setState(reservationStatus);
+                return reservationRepository.update(reservation);
+            }
+            return null;
+        }
+        catch (ResourceNotFoundException e){
+            return null;
+        }
     }
 
     @Override
