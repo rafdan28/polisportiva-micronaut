@@ -2,7 +2,9 @@ package it.osmci.polisportiva.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
+import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.SportsFacility;
+import it.osmci.polisportiva.model.SportsField;
 import it.osmci.polisportiva.service.SportsFacilityService;
 import jakarta.inject.Inject;
 
@@ -17,6 +19,24 @@ public class SportsFacilityController {
     @Post
     public HttpResponse<SportsFacility> createSportFacility(@Body @Valid SportsFacility sportsFacility){
         return HttpResponse.created(sportsFacilityServices.createSportsFacility(sportsFacility));
+    }
+
+    @Post("/{sportsFacilityId}/sports-fields")
+    public HttpResponse<Object> createSportsFieldBySportsFacility(@PathVariable Long sportsFacilityId, @Body @Valid SportsField sportsField){
+        try {
+            SportsField sportsField1 = sportsFacilityServices.createSportsFieldBySportsFacility(sportsFacilityId, sportsField);
+            if (sportsField1 == null) {
+                ResourceNotFoundException customException = new ResourceNotFoundException("There is no sports facility with this id!");
+                customException.setStackTrace(new StackTraceElement[0]);
+                return HttpResponse.notFound(customException);
+            }
+            return HttpResponse.ok(sportsField1);
+        }
+        catch (Exception e){
+            Exception customException = new Exception(e.getMessage());
+            customException.setStackTrace(new StackTraceElement[0]);
+            return HttpResponse.notFound(customException);
+        }
     }
 
     @Get
@@ -38,12 +58,12 @@ public class SportsFacilityController {
         try{
             SportsFacility sportsFacility = sportsFacilityServices.getSportsFacilityByOwnerId(ownerId);
             if (sportsFacility == null) {
-                return HttpResponse.notFound("Non ci sono strutture associate all'utente");
+                return HttpResponse.notFound(new ResourceNotFoundException("There are no user-associated sports facility with this id!"));
             }
             return HttpResponse.ok(sportsFacility);
         }
         catch (Exception e){
-            return HttpResponse.notFound("Non ci sono strutture associate all'utente");
+            return HttpResponse.notFound(new ResourceNotFoundException("There are no user-associated sports facility with this id!"));
         }
 
     }
