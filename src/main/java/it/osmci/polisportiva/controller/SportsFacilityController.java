@@ -9,7 +9,7 @@ import jakarta.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller("/sports-facility")
+@Controller("/sports-facilities")
 public class SportsFacilityController {
     @Inject
     private SportsFacilityService sportsFacilityServices;
@@ -31,6 +31,21 @@ public class SportsFacilityController {
     @Get("/{sportsFacilityId}")
     public HttpResponse<SportsFacility> getSportsFacilityById(@PathVariable Long sportsFacilityId) {
         return HttpResponse.ok(sportsFacilityServices.getSportsFacilityById(sportsFacilityId));
+    }
+
+    @Get("/filter_by_owner/{ownerId}")
+    public HttpResponse<Object> getSportsFacilityByOwnerId(@PathVariable Long ownerId) {
+        try{
+            SportsFacility sportsFacility = sportsFacilityServices.getSportsFacilityByOwnerId(ownerId);
+            if (sportsFacility == null) {
+                return HttpResponse.notFound("Non ci sono strutture associate all'utente");
+            }
+            return HttpResponse.ok(sportsFacility);
+        }
+        catch (Exception e){
+            return HttpResponse.notFound("Non ci sono strutture associate all'utente");
+        }
+
     }
 
     @Delete("/{sportsFacilityId}")

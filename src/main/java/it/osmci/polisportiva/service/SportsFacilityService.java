@@ -8,5 +8,7 @@ public interface SportsFacilityService {
     SportsFacility createSportsFacility(SportsFacility sportsFacility);
     List<SportsFacility> findAll();
     SportsFacility getSportsFacilityById(Long sportsFacilityId);
+    SportsFacility getSportsFacilityByOwnerId(Long ownerId);
     void deleteSportsFacilityById(Long sportsFacilityId);
+
 }

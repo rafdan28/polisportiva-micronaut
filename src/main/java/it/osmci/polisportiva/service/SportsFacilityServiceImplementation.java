@@ -31,6 +31,11 @@ public class SportsFacilityServiceImplementation implements SportsFacilityServic
     }
 
     @Override
+    public SportsFacility getSportsFacilityByOwnerId(Long ownerId) {
+        return sportsFacilityRepository.getSportsFacilityByOwnerId(ownerId);
+    }
+
+    @Override
     public void deleteSportsFacilityById(Long sportsFacilityId) {
         sportsFacilityRepository.deleteById(sportsFacilityId);
     }
