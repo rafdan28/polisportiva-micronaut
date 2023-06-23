@@ -26,6 +26,12 @@ public class SportsField {
 
     private boolean isIndoor;
 
+    @Column(name = "soccer_field_type")
+    private String soccerFieldType;
+
+    @Column(name = "tennis_field_type")
+    private String tennisFieldType;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -74,6 +80,22 @@ public class SportsField {
 
     public void setIndoor(boolean indoor) {
         isIndoor = indoor;
+    }
+
+    public String getSoccerFieldType() {
+        return soccerFieldType;
+    }
+
+    public void setSoccerFieldType(String soccerFieldType) {
+        this.soccerFieldType = soccerFieldType;
+    }
+
+    public String getTennisFieldType() {
+        return tennisFieldType;
+    }
+
+    public void setTennisFieldType(String tennisFieldType) {
+        this.tennisFieldType = tennisFieldType;
     }
 
     public User getUser() {
