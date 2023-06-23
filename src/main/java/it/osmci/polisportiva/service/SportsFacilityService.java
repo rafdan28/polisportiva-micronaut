@@ -1,8 +1,10 @@
 package it.osmci.polisportiva.service;
 
+import it.osmci.polisportiva.altro.pojo.SportsReservation;
 import it.osmci.polisportiva.model.SportsFacility;
 import it.osmci.polisportiva.model.SportsField;
 
+import java.util.Date;
 import java.util.List;
 
 public interface SportsFacilityService {
@@ -11,6 +13,6 @@ public interface SportsFacilityService {
     List<SportsFacility> findAll();
     SportsFacility getSportsFacilityById(Long sportsFacilityId);
     List<SportsFacility> getSportsFacilityByOwnerId(Long ownerId);
+    SportsReservation getReservationSummaryBySportsFacilityId(Long sportsFacilityId, Date startDate, Date endDate);
     void deleteSportsFacilityById(Long sportsFacilityId);
-
 }

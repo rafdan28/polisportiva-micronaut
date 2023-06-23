@@ -2,6 +2,7 @@ package it.osmci.polisportiva.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
+import it.osmci.polisportiva.altro.pojo.SportsReservation;
 import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.SportsFacility;
 import it.osmci.polisportiva.model.SportsField;
@@ -9,6 +10,8 @@ import it.osmci.polisportiva.service.SportsFacilityService;
 import jakarta.inject.Inject;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller("/sports-facilities")
@@ -71,6 +74,30 @@ public class SportsFacilityController {
             return HttpResponse.notFound(new ResourceNotFoundException("There are no user-associated sports facility with this id!"));
         }
 
+    }
+
+    @Get("/{sportsFacilityId}/reservations-summaries")
+    public HttpResponse<Object> getReservationSummaryBySportsFacilityId(@PathVariable Long sportsFacilityId, @QueryValue String start_date, @QueryValue String end_date){
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            Date startDate = inputFormat.parse(start_date);
+            Date endDate = inputFormat.parse(end_date);
+
+            SportsReservation sportsReservation = sportsFacilityServices.getReservationSummaryBySportsFacilityId(sportsFacilityId, startDate, endDate);
+            if (sportsReservation == null) {
+                ResourceNotFoundException customException = new ResourceNotFoundException("There is no sports facility with this id!");
+                customException.setStackTrace(new StackTraceElement[0]);
+                return HttpResponse.notFound(customException);
+            }
+            sportsReservation.setStartDateTime(start_date);
+            sportsReservation.setEndDateTime(end_date);
+            return HttpResponse.ok(sportsReservation);
+        }
+        catch (Exception e){
+            Exception customException = new Exception(e.getMessage());
+            customException.setStackTrace(new StackTraceElement[0]);
+            return HttpResponse.notFound(customException);
+        }
     }
 
     @Delete("/{sportsFacilityId}")

@@ -4,6 +4,7 @@ import it.osmci.polisportiva.altro.enumeration.ReservationStatus;
 import it.osmci.polisportiva.model.Reservation;
 import it.osmci.polisportiva.model.ReservationRating;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ReservationService {
@@ -12,5 +13,6 @@ public interface ReservationService {
     List<Reservation> findAll();
     Reservation getReservationById(Long reservationId);
     Reservation updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus);
+    List<Reservation> getReservationBySportsFacilityId(Long sportsFacilityId, Date startDate, Date endDate);
     void deleteReservationById(Long reservationId);
 }

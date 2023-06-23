@@ -8,6 +8,7 @@ import it.osmci.polisportiva.repository.ReservationRepository;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,6 +62,18 @@ public class ReservationServiceImplementation implements ReservationService {
             return null;
         }
         catch (ResourceNotFoundException e){
+            return null;
+        }
+    }
+
+    @Override
+    public List<Reservation> getReservationBySportsFacilityId(Long sportsFacilityId, Date startDate, Date endDate) {
+        try {
+            List<Reservation> reservationList = reservationRepository.getReservationBySportsFacilityId(sportsFacilityId, startDate, endDate);
+            System.out.println(reservationList.size());
+            return reservationList;
+        }
+        catch(Exception e){
             return null;
         }
     }
