@@ -7,7 +7,6 @@ import io.micronaut.http.HttpResponse;
 import jakarta.inject.Inject;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller("/users")
 public class UserController {
@@ -21,25 +20,32 @@ public class UserController {
     }
 
     @Get
-    public HttpResponse<List<User>> findAll() {
-        List<User> userList = userService.findAll();
-        if(userList.size() != 0){
-            return HttpResponse.ok(userList);
+    public HttpResponse<Object> findAll() {
+        try {
+            return HttpResponse.ok(userService.findAll());
         }
-        return HttpResponse.notFound();
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
     @Get("/{userId}")
-    public HttpResponse<User> getUserById(Long userId) {
-        User user = userService.getUserById(userId);
-        if (user != null) {
-            return HttpResponse.ok(user);
+    public HttpResponse<Object> getUserById(Long userId) {
+        try {
+            return HttpResponse.ok(userService.getUserById(userId));
         }
-        return HttpResponse.notFound();
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
     @Delete("/{userId}")
-    public void deleteUserById(@PathVariable Long userId) {
-        userService.deleteUserById(userId);
+    public HttpResponse<Object> deleteUserById(@PathVariable Long userId) {
+        try{
+            return HttpResponse.ok(userService.deleteUserById(userId));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 }

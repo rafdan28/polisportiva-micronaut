@@ -23,9 +23,10 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public List<User> findAll() {
-        return userRepository.findAll();
+        List<User> userList = userRepository.findAll();
+        if(userList.size() != 0) return userList;
+        else throw new ResourceNotFoundException("There are no users present.");
     }
-
 
     @Override
     public User getUserById(Long userId) {
@@ -33,7 +34,12 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void deleteUserById(Long userId) {
-        userRepository.deleteById(userId);
+    public Object deleteUserById(Long userId) {
+        Objects.requireNonNull(userId);
+        if(userRepository.existsById(userId)){
+            userRepository.deleteById(userId);
+            return "This user id has been deleted";
+        }
+        else throw new ResourceNotFoundException("This user id doesn't identify any user!");
     }
 }

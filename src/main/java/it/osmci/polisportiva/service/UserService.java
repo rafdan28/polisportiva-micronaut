@@ -8,5 +8,5 @@ public interface UserService {
     User registerUser(User user);
     List<User> findAll();
     User getUserById(Long userId);
-    void deleteUserById(Long userId);
+    Object deleteUserById(Long userId);
 }
