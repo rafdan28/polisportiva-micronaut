@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller("/sports-facilities")
 public class SportsFacilityController {
@@ -43,37 +44,37 @@ public class SportsFacilityController {
     }
 
     @Get
-    public HttpResponse<List<SportsFacility>> findAll() {
-        List<SportsFacility> sportsFacilityList = sportsFacilityServices.findAll();
-        if(sportsFacilityList.size() != 0){
-            return HttpResponse.ok(sportsFacilityList);
+    public HttpResponse<Object> findSportsFacility(@QueryValue Optional<Long> filter_by_owner_id) {
+        if (filter_by_owner_id.isEmpty()) {
+            List<SportsFacility> sportsFacilityList = sportsFacilityServices.findAll();
+            if (sportsFacilityList.size() != 0) {
+                return HttpResponse.ok(sportsFacilityList);
+            } else {
+                return HttpResponse.notFound();
+            }
         }
-        return HttpResponse.notFound();
+        else {
+            try {
+                List<SportsFacility> sportsFacilityList = sportsFacilityServices.getSportsFacilityByOwnerId(filter_by_owner_id.get());
+                if (sportsFacilityList.size() != 0) {
+                    return HttpResponse.ok(sportsFacilityList);
+                } else {
+                    ResourceNotFoundException customException = new ResourceNotFoundException("There are no user-associated sports facility with this id!");
+                    customException.setStackTrace(new StackTraceElement[0]);
+                    return HttpResponse.notFound(customException);
+                }
+            }
+            catch (Exception e){
+                Exception customException = new Exception(e.getMessage());
+                customException.setStackTrace(new StackTraceElement[0]);
+                return HttpResponse.notFound(new ResourceNotFoundException("There are no user-associated sports facility with this id!"));
+            }
+        }
     }
 
     @Get("/{sportsFacilityId}")
     public HttpResponse<SportsFacility> getSportsFacilityById(@PathVariable Long sportsFacilityId) {
         return HttpResponse.ok(sportsFacilityServices.getSportsFacilityById(sportsFacilityId));
-    }
-
-    @Get("/filter_by_owner/{ownerId}")
-    public HttpResponse<Object> getSportsFacilityByOwnerId(@PathVariable Long ownerId) {
-        try {
-            List<SportsFacility> sportsFacilityList = sportsFacilityServices.getSportsFacilityByOwnerId(ownerId);
-            if (sportsFacilityList.size() != 0) {
-                return HttpResponse.ok(sportsFacilityList);
-            } else {
-                ResourceNotFoundException customException = new ResourceNotFoundException("There are no user-associated sports facility with this id!");
-                customException.setStackTrace(new StackTraceElement[0]);
-                return HttpResponse.notFound(customException);
-            }
-        }
-        catch (Exception e){
-            Exception customException = new Exception(e.getMessage());
-            customException.setStackTrace(new StackTraceElement[0]);
-            return HttpResponse.notFound(new ResourceNotFoundException("There are no user-associated sports facility with this id!"));
-        }
-
     }
 
     @Get("/{sportsFacilityId}/reservations-summaries")
@@ -104,4 +105,32 @@ public class SportsFacilityController {
     public void deleteSportsFacilityById(@PathVariable Long sportsFacilityId) {
         sportsFacilityServices.deleteSportsFacilityById(sportsFacilityId);
     }
+
+    //    @Get
+//    public HttpResponse<List<SportsFacility>> findAll() {
+//        List<SportsFacility> sportsFacilityList = sportsFacilityServices.findAll();
+//        if(sportsFacilityList.size() != 0){
+//            return HttpResponse.ok(sportsFacilityList);
+//        }
+//        return HttpResponse.notFound();
+//    }
+
+//    @Get("/filter_by_owner/{ownerId}")
+//    public HttpResponse<Object> getSportsFacilityByOwnerId(@PathVariable Long ownerId) {
+//        try {
+//            List<SportsFacility> sportsFacilityList = sportsFacilityServices.getSportsFacilityByOwnerId(ownerId);
+//            if (sportsFacilityList.size() != 0) {
+//                return HttpResponse.ok(sportsFacilityList);
+//            } else {
+//                ResourceNotFoundException customException = new ResourceNotFoundException("There are no user-associated sports facility with this id!");
+//                customException.setStackTrace(new StackTraceElement[0]);
+//                return HttpResponse.notFound(customException);
+//            }
+//        }
+//        catch (Exception e){
+//            Exception customException = new Exception(e.getMessage());
+//            customException.setStackTrace(new StackTraceElement[0]);
+//            return HttpResponse.notFound(new ResourceNotFoundException("There are no user-associated sports facility with this id!"));
+//        }
+//    }
 }

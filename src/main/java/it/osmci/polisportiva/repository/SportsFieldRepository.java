@@ -9,6 +9,10 @@ import java.util.List;
 
 @Repository
 public interface SportsFieldRepository extends JpaRepository<SportsField, Long> {
-    @Query("SELECT s FROM SportsField s WHERE (:sport IS NULL OR :sport = s.sport) AND (:ownerId IS NULL OR :ownerId = s.sportsFacility.owner.id)")
+    @Query("SELECT s FROM SportsField s WHERE :ownerId = s.sportsFacility.owner.id")
+    List<SportsField> getSportsFieldsByOwnerId(Long ownerId);
+    @Query("SELECT s FROM SportsField s WHERE :sport = s.sport")
+    List<SportsField> getSportsFieldsBySport(String sport);
+    @Query("SELECT s FROM SportsField s WHERE (:sport = s.sport) AND (:ownerId = s.sportsFacility.owner.id)")
     List<SportsField> getSportsFieldsByOwnerIdBySport(Long ownerId, String sport);
 }
