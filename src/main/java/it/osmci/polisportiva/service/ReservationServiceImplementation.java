@@ -43,7 +43,9 @@ public class ReservationServiceImplementation implements ReservationService {
 
     @Override
     public List<Reservation> findAll() {
-        return reservationRepository.findAll();
+        List<Reservation> reservationList = reservationRepository.findAll();
+        if(reservationList.size() != 0) return reservationList;
+        else throw new ResourceNotFoundException("There are no reservation present.");
     }
 
     @Override
@@ -79,7 +81,12 @@ public class ReservationServiceImplementation implements ReservationService {
     }
 
     @Override
-    public void deleteReservationById(Long reservationId) {
-        reservationRepository.deleteById(reservationId);
+    public Object deleteReservationById(Long reservationId) {
+        Objects.requireNonNull(reservationId);
+        if(reservationRepository.existsById(reservationId)){
+            reservationRepository.deleteById(reservationId);
+            return "This reservation id has been deleted";
+        }
+        else throw new ResourceNotFoundException("This id doesn't identify any reservation!");
     }
 }

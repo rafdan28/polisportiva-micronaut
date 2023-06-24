@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Singleton
-public class ReservationRatingServiceImplementation implements ReservationRatingService{
+public class ReservationRatingServiceImplementation implements ReservationRatingService {
+
     @Inject
     private ReservationRatingRepository reservationRatingRepository;
 
@@ -21,8 +22,10 @@ public class ReservationRatingServiceImplementation implements ReservationRating
     }
 
     @Override
-    public List<ReservationRating> findAll() {
-        return reservationRatingRepository.findAll();
+    public Object findAll() {
+        List<ReservationRating> reservationRatingList = reservationRatingRepository.findAll();
+        if(reservationRatingList.size() != 0) return reservationRatingList;
+        else throw new ResourceNotFoundException("There are no users present.");
     }
 
     @Override
@@ -31,7 +34,12 @@ public class ReservationRatingServiceImplementation implements ReservationRating
     }
 
     @Override
-    public void deleteReservationRatingById(Long reservationRatingId) {
-        reservationRatingRepository.deleteById(reservationRatingId);
+    public Object deleteReservationRatingById(Long reservationRatingId) {
+        Objects.requireNonNull(reservationRatingId);
+        if(reservationRatingRepository.existsById(reservationRatingId)){
+            reservationRatingRepository.deleteById(reservationRatingId);
+            return "This reservation rating id has been deleted";
+        }
+        else throw new ResourceNotFoundException("This id doesn't identify any reservation rating!");
     }
 }

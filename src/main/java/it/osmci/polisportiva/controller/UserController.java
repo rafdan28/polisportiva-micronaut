@@ -14,9 +14,13 @@ public class UserController {
     private UserService userService;
 
     @Post
-    public HttpResponse<User> registerUser(@Body @Valid User user) {
-        User createdUser = userService.registerUser(user);
-        return HttpResponse.created(createdUser);
+    public HttpResponse<Object> registerUser(@Body @Valid User user) {
+        try {
+            return HttpResponse.created(userService.registerUser(user));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
     @Get

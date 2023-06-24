@@ -18,8 +18,13 @@ public class SportsFieldController {
     private SportsFieldService sportsFieldService;
 
     @Post
-    public HttpResponse<SportsField> createSportsField(@Body @Valid SportsField sportsField) {
-        return HttpResponse.created(sportsFieldService.createSportsField(sportsField));
+    public HttpResponse<Object> createSportsField(@Body @Valid SportsField sportsField) {
+        try {
+            return HttpResponse.created(sportsFieldService.createSportsField(sportsField));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
     @Get

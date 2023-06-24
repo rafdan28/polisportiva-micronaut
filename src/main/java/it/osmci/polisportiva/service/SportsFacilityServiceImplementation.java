@@ -7,6 +7,7 @@ import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.Reservation;
 import it.osmci.polisportiva.model.SportsFacility;
 import it.osmci.polisportiva.model.SportsField;
+import it.osmci.polisportiva.model.User;
 import it.osmci.polisportiva.repository.SportsFacilityRepository;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -27,6 +28,9 @@ public class SportsFacilityServiceImplementation implements SportsFacilityServic
 
     @Inject
     private ReservationService reservationService;
+
+    @Inject
+    private UserService userService;
 
     @Override
     public SportsFacility createSportsFacility(SportsFacility sportsFacility) {
@@ -52,7 +56,9 @@ public class SportsFacilityServiceImplementation implements SportsFacilityServic
 
     @Override
     public List<SportsFacility> findAll() {
-        return sportsFacilityRepository.findAll();
+        List<SportsFacility> sportsFacilityList =  sportsFacilityRepository.findAll();
+        if(sportsFacilityList.size() != 0) return sportsFacilityList;
+        else throw new ResourceNotFoundException("There are no sports facilities present.");
     }
 
     @Override
@@ -62,7 +68,11 @@ public class SportsFacilityServiceImplementation implements SportsFacilityServic
 
     @Override
     public List<SportsFacility> getSportsFacilityByOwnerId(Long ownerId) {
-        return sportsFacilityRepository.getSportsFacilityByOwnerId(ownerId);
+        User user = userService.getUserById(ownerId);
+        if(user != null){
+            return sportsFacilityRepository.getSportsFacilityByOwnerId(ownerId);
+        }
+        else throw new ResourceNotFoundException("This user id doesn't identify any user!");
     }
 
     @Override
@@ -117,8 +127,13 @@ public class SportsFacilityServiceImplementation implements SportsFacilityServic
     }
 
     @Override
-    public void deleteSportsFacilityById(Long sportsFacilityId) {
-        sportsFacilityRepository.deleteById(sportsFacilityId);
+    public Object deleteSportsFacilityById(Long sportsFacilityId) {
+        Objects.requireNonNull(sportsFacilityId);
+        if(sportsFacilityRepository.existsById(sportsFacilityId)){
+            sportsFacilityRepository.deleteById(sportsFacilityId);
+            return "This sport facility id has been deleted";
+        }
+        else throw new ResourceNotFoundException("This id doesn't identify any sport facility!");
     }
 
     private void increaseByState(int[] array, ReservationStatus state) {

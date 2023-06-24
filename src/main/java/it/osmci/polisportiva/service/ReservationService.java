@@ -14,5 +14,5 @@ public interface ReservationService {
     Reservation getReservationById(Long reservationId);
     Reservation updateReservationStatusById(Long reservationId, ReservationStatus reservationStatus);
     List<Reservation> getReservationBySportsFacilityId(Long sportsFacilityId, Date startDate, Date endDate);
-    void deleteReservationById(Long reservationId);
+    Object deleteReservationById(Long reservationId);
 }

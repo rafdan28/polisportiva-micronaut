@@ -10,7 +10,6 @@ import it.osmci.polisportiva.service.ReservationService;
 import jakarta.inject.Inject;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller("/reservations")
 public class ReservationController {
@@ -18,8 +17,13 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @Post
-    public HttpResponse<Reservation> createReservation(@Body @Valid Reservation reservation){
-        return HttpResponse.created(reservationService.createReservation(reservation));
+    public HttpResponse<Object> createReservation(@Body @Valid Reservation reservation){
+        try {
+            return HttpResponse.created(reservationService.createReservation(reservation));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
     @Post("/{reservationId}/rating")
@@ -29,29 +33,36 @@ public class ReservationController {
             if (reservationRating1 == null) {
                 ResourceNotFoundException customException = new ResourceNotFoundException("There is no reservation with this id!");
                 customException.setStackTrace(new StackTraceElement[0]);
-                return HttpResponse.notFound(customException);
+                return HttpResponse.notFound(customException.getMessage());
             }
             return HttpResponse.ok(reservationRating1);
         }
         catch (Exception e){
             Exception customException = new Exception(e.getMessage());
             customException.setStackTrace(new StackTraceElement[0]);
-            return HttpResponse.notFound(customException);
+            return HttpResponse.notFound(customException.getMessage());
         }
     }
 
     @Get
-    public HttpResponse<List<Reservation>> findAll() {
-        List<Reservation> reservationList = reservationService.findAll();
-        if(reservationList.size() != 0){
-            return HttpResponse.ok(reservationList);
+    public HttpResponse<Object> findAll() {
+        try {
+            return HttpResponse.ok(reservationService.findAll());
         }
-        return HttpResponse.notFound();
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
     @Get("/{reservationId}")
-    public HttpResponse<Reservation> getReservationById(@PathVariable Long reservationId) {
-        return HttpResponse.ok(reservationService.getReservationById(reservationId));
+    public HttpResponse<Object> getReservationById(@PathVariable Long reservationId) {
+        try {
+            return HttpResponse.ok(reservationService.getReservationById(reservationId));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
+
     }
 
     @Put("/{reservationId}/status/{state}")
@@ -61,20 +72,25 @@ public class ReservationController {
             if (reservation == null) {
                 ResourceNotFoundException customException = new ResourceNotFoundException("There is no reservation with this id!");
                 customException.setStackTrace(new StackTraceElement[0]);
-                return HttpResponse.notFound(customException);
+                return HttpResponse.notFound(customException.getMessage());
             }
             return HttpResponse.ok(reservation);
         }
         catch (Exception e){
             Exception customException = new Exception(e.getMessage());
             customException.setStackTrace(new StackTraceElement[0]);
-            return HttpResponse.notFound(customException);
+            return HttpResponse.notFound(customException.getMessage());
         }
     }
 
     @Delete("/{reservationId}")
-    public void deleteReservationById(@PathVariable Long reservationId) {
-        reservationService.deleteReservationById(reservationId);
+    public Object deleteReservationById(@PathVariable Long reservationId) {
+        try{
+            return HttpResponse.ok(reservationService.deleteReservationById(reservationId));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
 }

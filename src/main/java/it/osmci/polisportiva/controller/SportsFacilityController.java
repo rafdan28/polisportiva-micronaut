@@ -21,8 +21,13 @@ public class SportsFacilityController {
     private SportsFacilityService sportsFacilityServices;
 
     @Post
-    public HttpResponse<SportsFacility> createSportFacility(@Body @Valid SportsFacility sportsFacility){
-        return HttpResponse.created(sportsFacilityServices.createSportsFacility(sportsFacility));
+    public HttpResponse<Object> createSportFacility(@Body @Valid SportsFacility sportsFacility){
+        try {
+            return HttpResponse.created(sportsFacilityServices.createSportsFacility(sportsFacility));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
     @Post("/{sportsFacilityId}/sports-fields")
@@ -32,25 +37,25 @@ public class SportsFacilityController {
             if (sportsField1 == null) {
                 ResourceNotFoundException customException = new ResourceNotFoundException("There is no sports facility with this id!");
                 customException.setStackTrace(new StackTraceElement[0]);
-                return HttpResponse.notFound(customException);
+                return HttpResponse.notFound(customException.getMessage());
             }
             return HttpResponse.ok(sportsField1);
         }
         catch (Exception e){
             Exception customException = new Exception(e.getMessage());
             customException.setStackTrace(new StackTraceElement[0]);
-            return HttpResponse.notFound(customException);
+            return HttpResponse.notFound(customException.getMessage());
         }
     }
 
     @Get
     public HttpResponse<Object> findSportsFacility(@QueryValue Optional<Long> filter_by_owner_id) {
         if (filter_by_owner_id.isEmpty()) {
-            List<SportsFacility> sportsFacilityList = sportsFacilityServices.findAll();
-            if (sportsFacilityList.size() != 0) {
-                return HttpResponse.ok(sportsFacilityList);
-            } else {
-                return HttpResponse.notFound();
+            try {
+                return HttpResponse.ok(sportsFacilityServices.findAll());
+            }
+            catch (Exception e){
+                return HttpResponse.notFound(e.getMessage());
             }
         }
         else {
@@ -61,20 +66,25 @@ public class SportsFacilityController {
                 } else {
                     ResourceNotFoundException customException = new ResourceNotFoundException("There are no user-associated sports facility with this id!");
                     customException.setStackTrace(new StackTraceElement[0]);
-                    return HttpResponse.notFound(customException);
+                    return HttpResponse.notFound(customException.getMessage());
                 }
             }
             catch (Exception e){
                 Exception customException = new Exception(e.getMessage());
                 customException.setStackTrace(new StackTraceElement[0]);
-                return HttpResponse.notFound(new ResourceNotFoundException("There are no user-associated sports facility with this id!"));
+                return HttpResponse.notFound(customException.getMessage());
             }
         }
     }
 
     @Get("/{sportsFacilityId}")
-    public HttpResponse<SportsFacility> getSportsFacilityById(@PathVariable Long sportsFacilityId) {
-        return HttpResponse.ok(sportsFacilityServices.getSportsFacilityById(sportsFacilityId));
+    public HttpResponse<Object> getSportsFacilityById(@PathVariable Long sportsFacilityId) {
+        try {
+            return HttpResponse.ok(sportsFacilityServices.getSportsFacilityById(sportsFacilityId));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
     @Get("/{sportsFacilityId}/reservations-summaries")
@@ -88,7 +98,7 @@ public class SportsFacilityController {
             if (sportsReservation == null) {
                 ResourceNotFoundException customException = new ResourceNotFoundException("There is no sports facility with this id!");
                 customException.setStackTrace(new StackTraceElement[0]);
-                return HttpResponse.notFound(customException);
+                return HttpResponse.notFound(customException.getMessage());
             }
             sportsReservation.setStartDateTime(start_date);
             sportsReservation.setEndDateTime(end_date);
@@ -97,16 +107,21 @@ public class SportsFacilityController {
         catch (Exception e){
             Exception customException = new Exception(e.getMessage());
             customException.setStackTrace(new StackTraceElement[0]);
-            return HttpResponse.notFound(customException);
+            return HttpResponse.notFound(customException.getMessage());
         }
     }
 
     @Delete("/{sportsFacilityId}")
-    public void deleteSportsFacilityById(@PathVariable Long sportsFacilityId) {
-        sportsFacilityServices.deleteSportsFacilityById(sportsFacilityId);
+    public Object deleteSportsFacilityById(@PathVariable Long sportsFacilityId) {
+        try{
+            return HttpResponse.ok(sportsFacilityServices.deleteSportsFacilityById(sportsFacilityId));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
-    //    @Get
+//    @Get
 //    public HttpResponse<List<SportsFacility>> findAll() {
 //        List<SportsFacility> sportsFacilityList = sportsFacilityServices.findAll();
 //        if(sportsFacilityList.size() != 0){
