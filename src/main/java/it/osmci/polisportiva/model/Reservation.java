@@ -1,5 +1,6 @@
 package it.osmci.polisportiva.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.osmci.polisportiva.altro.enumeration.ReservationStatus;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,6 +29,7 @@ public class Reservation {
     private ReservationStatus state = ReservationStatus.PENDING;
 
     @OneToOne(mappedBy = "reservation", cascade  = CascadeType.PERSIST)
+    @JsonManagedReference
     private ReservationRating rating;
 
     @ManyToOne(optional = false)
@@ -76,6 +78,14 @@ public class Reservation {
 
     public void setState(ReservationStatus state) {
         this.state = state;
+    }
+
+    public ReservationRating getRating() {
+        return rating;
+    }
+
+    public void setRating(ReservationRating rating) {
+        this.rating = rating;
     }
 
     public User getUser() {

@@ -1,5 +1,7 @@
 package it.osmci.polisportiva.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -17,7 +19,8 @@ public class ReservationRating {
     private String description;
 
     @OneToOne(optional = false)
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "reservation_id")
+    @JsonBackReference
     private Reservation reservation;
 
     public Long getId() {
