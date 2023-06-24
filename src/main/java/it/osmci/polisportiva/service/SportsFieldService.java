@@ -11,5 +11,5 @@ public interface SportsFieldService {
     List<SportsField> getSportsFieldsByOwnerId(Long ownerId);
     List<SportsField> getSportsFieldsBySport(String sport);
     List<SportsField> getSportsFieldsByOwnerIdBySport(Long ownerId, String sport);
-    void deleteSportsFieldById(Long sportsFieldId);
+    Object deleteSportsFieldById(Long sportsFieldId);
 }

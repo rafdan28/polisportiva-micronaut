@@ -23,7 +23,9 @@ public class SportsFieldServiceImplementation implements SportsFieldService{
 
     @Override
     public List<SportsField> findAll() {
-        return sportsFieldRepository.findAll();
+        List<SportsField> sportsFieldList =  sportsFieldRepository.findAll();
+        if(sportsFieldList.size() != 0) return sportsFieldList;
+        else throw new ResourceNotFoundException("There are no sports fields present.");
     }
 
     @Override
@@ -52,7 +54,12 @@ public class SportsFieldServiceImplementation implements SportsFieldService{
     }
 
     @Override
-    public void deleteSportsFieldById(Long sportsFieldId) {
-        sportsFieldRepository.deleteById(sportsFieldId);
+    public Object deleteSportsFieldById(Long sportsFieldId) {
+        Objects.requireNonNull(sportsFieldId);
+        if(sportsFieldRepository.existsById(sportsFieldId)){
+            sportsFieldRepository.deleteById(sportsFieldId);
+            return "This sport field id has been deleted";
+        }
+        else throw new ResourceNotFoundException("This id doesn't identify any sport field!");
     }
 }

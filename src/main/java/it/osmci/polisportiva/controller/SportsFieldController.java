@@ -25,11 +25,12 @@ public class SportsFieldController {
     @Get
     public HttpResponse<Object> findSportsField(@QueryValue Optional<Long> filter_by_owner_id, @QueryValue Optional<String> filter_by_sport) {
         if (filter_by_owner_id.isEmpty() && filter_by_sport.isEmpty()) {
-            List<SportsField> sportsFieldList = sportsFieldService.findAll();
-            if(sportsFieldList.size() != 0){
-                return HttpResponse.ok(sportsFieldList);
+            try {
+                return HttpResponse.ok(sportsFieldService.findAll());
             }
-            return HttpResponse.notFound();
+            catch (Exception e){
+                return HttpResponse.notFound(e.getMessage());
+            }
         }
         else if(filter_by_owner_id.isPresent() && filter_by_sport.isPresent()){
             List<SportsField> sportsFieldList = sportsFieldService.getSportsFieldsByOwnerIdBySport(filter_by_owner_id.get(), filter_by_sport.get());
@@ -38,7 +39,7 @@ public class SportsFieldController {
             }
             ResourceNotFoundException customException = new ResourceNotFoundException("There are no user-associated sports field with this id and sport!");
             customException.setStackTrace(new StackTraceElement[0]);
-            return HttpResponse.notFound(customException);
+            return HttpResponse.notFound(customException.getMessage());
         }
         else if(filter_by_owner_id.isPresent()) {
             List<SportsField> sportsFieldList = sportsFieldService.getSportsFieldsByOwnerId(filter_by_owner_id.get());
@@ -47,7 +48,7 @@ public class SportsFieldController {
             }
             ResourceNotFoundException customException = new ResourceNotFoundException("There are no user-associated sports field with this id!");
             customException.setStackTrace(new StackTraceElement[0]);
-            return HttpResponse.notFound(customException);
+            return HttpResponse.notFound(customException.getMessage());
         }
         else{
             List<SportsField> sportsFieldList = sportsFieldService.getSportsFieldsBySport(filter_by_sport.get());
@@ -56,18 +57,29 @@ public class SportsFieldController {
             }
             ResourceNotFoundException customException = new ResourceNotFoundException("There are no sports field with this sport!");
             customException.setStackTrace(new StackTraceElement[0]);
-            return HttpResponse.notFound(customException);
+            return HttpResponse.notFound(customException.getMessage());
         }
     }
 
     @Get("/{sportsFieldId}")
-    public HttpResponse<SportsField> getSportsFieldsById(@PathVariable Long sportsFieldId) {
-      return HttpResponse.ok(sportsFieldService.getSportsFieldById(sportsFieldId));
+    public HttpResponse<Object> getSportsFieldsById(@PathVariable Long sportsFieldId) {
+        try {
+            return HttpResponse.ok(sportsFieldService.getSportsFieldById(sportsFieldId));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
     }
 
     @Delete("/{sportsFieldId}")
-    public void deleteSportsFieldsById(@PathVariable Long sportsFieldId) {
-        sportsFieldService.deleteSportsFieldById(sportsFieldId);
+    public HttpResponse<Object> deleteSportsFieldsById(@PathVariable Long sportsFieldId) {
+        try{
+            return HttpResponse.ok(sportsFieldService.deleteSportsFieldById(sportsFieldId));
+        }
+        catch (Exception e){
+            return HttpResponse.notFound(e.getMessage());
+        }
+
     }
 
     //    @Get
