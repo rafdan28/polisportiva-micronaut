@@ -3,7 +3,7 @@ package it.osmci.polisportiva.controller;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import it.osmci.polisportiva.altro.dto.ReservationDTO;
-import it.osmci.polisportiva.altro.enumeration.ReservationStatus;
+import it.osmci.polisportiva.altro.dto.ReservationStatusDTO;
 import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.Reservation;
 import it.osmci.polisportiva.model.ReservationRating;
@@ -83,10 +83,10 @@ public class ReservationController {
 
     }
 
-    @Put("/{reservationId}/status/{state}")
-    public HttpResponse<Object> updateReservationStatusById(@PathVariable Long reservationId, @PathVariable ReservationStatus state){
+    @Put("/{reservationId}/status")
+    public HttpResponse<Object> updateReservationStatusById(@PathVariable Long reservationId, @Body ReservationStatusDTO statusDTO){
         try {
-            Reservation reservation = reservationService.updateReservationStatusById(reservationId, state);
+            Reservation reservation = reservationService.updateReservationStatusById(reservationId, statusDTO.getState());
             if (reservation == null) {
                 ResourceNotFoundException customException = new ResourceNotFoundException("There is no reservation with this id!");
                 customException.setStackTrace(new StackTraceElement[0]);
