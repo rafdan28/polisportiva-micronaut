@@ -30,7 +30,7 @@ public class User {
 
     @NotBlank
     @NotNull
-    @Email(message = "Email should be valid", regexp = "^[\\w.\\.]+@([\\w.]+\\.)+[\\w.]{2,4}$")
+//    @Email(message = "Email should be valid", regexp = "^[\\w.\\.]+@([\\w.]+\\.)+[\\w.]{2,4}$")
     @Column(name = "email", unique = true)
     private String email;
 
