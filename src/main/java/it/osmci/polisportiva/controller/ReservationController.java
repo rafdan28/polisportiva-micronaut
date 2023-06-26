@@ -2,11 +2,16 @@ package it.osmci.polisportiva.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
+import it.osmci.polisportiva.altro.dto.ReservationDTO;
 import it.osmci.polisportiva.altro.enumeration.ReservationStatus;
 import it.osmci.polisportiva.altro.exception.ResourceNotFoundException;
 import it.osmci.polisportiva.model.Reservation;
 import it.osmci.polisportiva.model.ReservationRating;
+import it.osmci.polisportiva.model.SportsField;
+import it.osmci.polisportiva.model.User;
 import it.osmci.polisportiva.service.ReservationService;
+import it.osmci.polisportiva.service.SportsFieldService;
+import it.osmci.polisportiva.service.UserService;
 import jakarta.inject.Inject;
 
 import javax.validation.Valid;
@@ -16,9 +21,22 @@ public class ReservationController {
     @Inject
     private ReservationService reservationService;
 
+    @Inject
+    private SportsFieldService sportsFieldService;
+
+    @Inject
+    private UserService userService;
+
     @Post
-    public HttpResponse<Object> createReservation(@Body @Valid Reservation reservation){
+    public HttpResponse<Object> createReservation(@Body @Valid ReservationDTO reservationDTO){
         try {
+            SportsField sportsField = sportsFieldService.getSportsFieldById(reservationDTO.getSportsFieldId());
+            User user = userService.getUserById(reservationDTO.getOwnerId());
+            Reservation reservation = new Reservation();
+            reservation.setSportsField(sportsField);
+            reservation.setUser(user);
+            reservation.setStartDateTime(reservationDTO.getDateRange().getStartDate());
+            reservation.setEndDateTime(reservationDTO.getDateRange().getEndDate());
             return HttpResponse.created(reservationService.createReservation(reservation));
         }
         catch (Exception e){

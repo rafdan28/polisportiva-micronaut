@@ -101,6 +101,13 @@
       <scope>runtime</scope>
     </dependency>
 
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+
     <!--    io.micronaut.test: Dipendenza per i test unitari di Micronaut con JUnit 5.-->
     <dependency>
       <groupId>io.micronaut.test</groupId>

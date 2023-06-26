@@ -1,5 +1,6 @@
 package it.osmci.polisportiva.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.osmci.polisportiva.altro.enumeration.ReservationStatus;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,12 +16,15 @@ public class Reservation {
     @SequenceGenerator(name = "ID_RESERVATION", sequenceName = "ID_GENERATOR_RESERVATION", allocationSize = 1)
     private Long id;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @Column(nullable = false)
     private ZonedDateTime startDateTime;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @Column(nullable = false)
     private ZonedDateTime endDateTime;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @CreationTimestamp
     private ZonedDateTime createdAt;
 
