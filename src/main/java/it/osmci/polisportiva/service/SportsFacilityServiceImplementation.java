@@ -113,8 +113,8 @@ public class SportsFacilityServiceImplementation implements SportsFacilityServic
                     List<SportsReservationReport> sportsReservationReportList = new LinkedList<>();
                     sportsReservationReportList.add(new SportsReservationReport(volleyballInfo[0],"volleyball", 0.0, volleyballInfo[1], volleyballInfo[2], volleyballInfo[3]));
                     sportsReservationReportList.add(new SportsReservationReport(soccerInfo[0],"soccer", 0.0, soccerInfo[1], soccerInfo[2], soccerInfo[3]));
-                    sportsReservationReportList.add(new SportsReservationReport(basketInfo[0],"soccer", 0.0, basketInfo[1], basketInfo[2], basketInfo[3]));
-                    sportsReservationReportList.add(new SportsReservationReport(tennisInfo[0],"soccer", 0.0, tennisInfo[1], tennisInfo[2], tennisInfo[3]));
+                    sportsReservationReportList.add(new SportsReservationReport(basketInfo[0],"basket", 0.0, basketInfo[1], basketInfo[2], basketInfo[3]));
+                    sportsReservationReportList.add(new SportsReservationReport(tennisInfo[0],"tennis", 0.0, tennisInfo[1], tennisInfo[2], tennisInfo[3]));
 
                     return new SportsReservation(sportsFacilityId, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()), sportsReservationReportList);
                 }
