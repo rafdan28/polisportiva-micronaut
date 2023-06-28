@@ -71,8 +71,7 @@ public class ReservationServiceImplementation implements ReservationService {
     @Override
     public List<Reservation> getReservationBySportsFacilityId(Long sportsFacilityId, Date startDate, Date endDate) {
         try {
-            List<Reservation> reservationList = reservationRepository.getReservationBySportsFacilityId(sportsFacilityId, startDate, endDate);
-            return reservationList;
+            return reservationRepository.getReservationBySportsFacilityId(sportsFacilityId, startDate, endDate);
         }
         catch(Exception e){
             return null;
@@ -82,8 +81,7 @@ public class ReservationServiceImplementation implements ReservationService {
     @Override
     public List<Reservation> getReservationBySportsFacilityId(Long sportsFacilityId) {
         try {
-            List<Reservation> reservationList = reservationRepository.getReservationBySportsFacilityId(sportsFacilityId);
-            return reservationList;
+            return reservationRepository.getReservationBySportsFacilityId(sportsFacilityId);
         }
         catch(Exception e){
             return null;
