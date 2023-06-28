@@ -72,7 +72,17 @@ public class ReservationServiceImplementation implements ReservationService {
     public List<Reservation> getReservationBySportsFacilityId(Long sportsFacilityId, Date startDate, Date endDate) {
         try {
             List<Reservation> reservationList = reservationRepository.getReservationBySportsFacilityId(sportsFacilityId, startDate, endDate);
-            System.out.println(reservationList.size());
+            return reservationList;
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public List<Reservation> getReservationBySportsFacilityId(Long sportsFacilityId) {
+        try {
+            List<Reservation> reservationList = reservationRepository.getReservationBySportsFacilityId(sportsFacilityId);
             return reservationList;
         }
         catch(Exception e){

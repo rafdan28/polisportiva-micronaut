@@ -14,5 +14,6 @@ public interface SportsFacilityService {
     SportsFacility getSportsFacilityById(Long sportsFacilityId);
     List<SportsFacility> getSportsFacilityByOwnerId(Long ownerId);
     SportsReservation getReservationSummaryBySportsFacilityId(Long sportsFacilityId, Date startDate, Date endDate);
+    SportsReservation getReservationSummaryBySportsFacilityId(Long sportsFacilityId);
     Object deleteSportsFacilityById(Long sportsFacilityId);
 }

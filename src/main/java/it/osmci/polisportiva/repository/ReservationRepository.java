@@ -13,4 +13,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r FROM Reservation r JOIN SportsField sf ON r.sportsField.id=sf.id " +
             "WHERE (sf.sportsFacility.id=:sportsFacilityId) and (CAST(r.startDateTime AS date)>=:startDate) and (CAST(r.startDateTime AS date)<=:endDate)")
     List<Reservation> getReservationBySportsFacilityId(Long sportsFacilityId, Date startDate, Date endDate);
+
+    @Query("SELECT r FROM Reservation r JOIN SportsField sf ON r.sportsField.id=sf.id " +
+            "WHERE (sf.sportsFacility.id=:sportsFacilityId)")
+    List<Reservation> getReservationBySportsFacilityId(Long sportsFacilityId);
 }

@@ -88,21 +88,24 @@ public class SportsFacilityController {
     }
 
     @Get("/{sportsFacilityId}/reservations-summaries")
-    public HttpResponse<Object> getReservationSummaryBySportsFacilityId(@PathVariable Long sportsFacilityId, @QueryValue String start_date, @QueryValue String end_date){
+    public HttpResponse<Object> getReservationSummaryBySportsFacilityId(@PathVariable Long sportsFacilityId, @QueryValue Optional<String> start_date, @QueryValue Optional<String> end_date){
         try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            Date startDate = inputFormat.parse(start_date);
-            Date endDate = inputFormat.parse(end_date);
+            if(start_date.isPresent() && end_date.isPresent()){
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                Date startDate = inputFormat.parse(start_date.get());
+                Date endDate = inputFormat.parse(end_date.get());
 
-            SportsReservation sportsReservation = sportsFacilityServices.getReservationSummaryBySportsFacilityId(sportsFacilityId, startDate, endDate);
-            if (sportsReservation == null) {
-                ResourceNotFoundException customException = new ResourceNotFoundException("There is no sports facility with this id!");
-                customException.setStackTrace(new StackTraceElement[0]);
-                return HttpResponse.notFound(customException.getMessage());
+                SportsReservation sportsReservation = sportsFacilityServices.getReservationSummaryBySportsFacilityId(sportsFacilityId, startDate, endDate);
+
+                sportsReservation.setStartDateTime(start_date.get());
+                sportsReservation.setEndDateTime(end_date.get());
+                return HttpResponse.ok(sportsReservation);
             }
-            sportsReservation.setStartDateTime(start_date);
-            sportsReservation.setEndDateTime(end_date);
-            return HttpResponse.ok(sportsReservation);
+            else if(start_date.isEmpty() && end_date.isEmpty()) {
+                SportsReservation sportsReservation = sportsFacilityServices.getReservationSummaryBySportsFacilityId(sportsFacilityId);
+                return HttpResponse.ok(sportsReservation);
+            }
+            return HttpResponse.notFound("Enter both dates");
         }
         catch (Exception e){
             Exception customException = new Exception(e.getMessage());
