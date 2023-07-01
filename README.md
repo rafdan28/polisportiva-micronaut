@@ -55,7 +55,7 @@
 
 ## Prerequisiti
 
-<img src="https://www.docker.com/wp-content/uploads/2022/03/Docker-Logo-White-RGB_Horizontal.png" alt="Logo Docker" width="300" height="100">
+<a href="https://www.docker.com/" target="blank"><img src="https://www.docker.com/wp-content/uploads/2022/03/Docker-Logo-White-RGB_Horizontal.png" alt="Logo Docker" width="300" height="100"></a>
 
 Per avviare l'applicazione, è necessario eseguire il seguente comando:
 
@@ -92,10 +92,13 @@ Questo script genererà un file "stats.csv" in cui saranno scritti dati riguardo
 
 ## Documentazione
 
+- [Docker](https://www.docker.com/)
+- [Documentazione Docker](https://docs.docker.com/)
 - [Guida utente di Micronaut](https://docs.micronaut.io/3.9.3/guide/index.html)
 - [Riferimento API di Micronaut](https://docs.micronaut.io/3.9.3/api/index.html)
 - [Riferimento di configurazione di Micronaut](https://docs.micronaut.io/3.9.3/guide/configurationreference.html)
 - [Guide di Micronaut](https://guides.micronaut.io/index.html)
+
 
 
 ## Author
