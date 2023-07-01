@@ -101,6 +101,7 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!--    com.fasterxml.jackson.core:jackson-databind: Dipendenza per serializzazione degli oggetti JSON.-->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
