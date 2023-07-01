@@ -97,6 +97,13 @@ Questo script genererà un file "stats.csv" in cui saranno scritti dati riguardo
 - [Riferimento di configurazione di Micronaut](https://docs.micronaut.io/3.9.3/guide/configurationreference.html)
 - [Guide di Micronaut](https://guides.micronaut.io/index.html)
 
+
+## Author
+
+- Author - [Raffaele D'Anna](https://github.com/rafdan28)
+- Twitter - [@rafdanna28](https://twitter.com/rafdanna28)
+
+
 [//]: # (## Risorse di test)
 
 [//]: # ()
