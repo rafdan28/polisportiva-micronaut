@@ -14,5 +14,3 @@ services:
       POSTGRES_DB: polisportiva
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-#    volumes:
-#      - ./initDb/polisportivadb.sql:/docker-entrypoint-initdb.d/init.sql
