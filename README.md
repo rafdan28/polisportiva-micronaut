@@ -55,7 +55,7 @@
 
 ## Prerequisiti
 
-<a href="https://www.docker.com/" target="blank"><img src="https://www.docker.com/wp-content/uploads/2022/03/Docker-Logo-White-RGB_Horizontal.png" alt="Logo Docker" width="300" height="100"></a>
+<a href="https://www.docker.com/" target="blank"><img src="https://www.docker.com/wp-content/uploads/2022/03/Docker-Logo-White-RGB_Horizontal.png" alt="Logo Docker" width="290" height="95"></a>
 
 Per avviare l'applicazione, è necessario eseguire il seguente comando:
 
