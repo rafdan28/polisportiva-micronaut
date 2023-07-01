@@ -46,24 +46,49 @@
 [//]: # ()
 [//]: # ()
 
-# Applicazione per Polisportiva
+# Applicazione REST API Polisportiva
 
-<img src="https://1.bp.blogspot.com/-LtDrpt3CIFg/XxeLOx1gJvI/AAAAAAAAPyc/nm3_SCwcXZgwCUKc46T_CLVaXTehR-MbwCLcBGAsYHQ/s603/Micronaut_OG_Logo.png" alt="Logo Docker" width="180" height="100">
-
-Questo progetto rappresenta un'applicazione sviluppata attraverso il framework Micronaut per una polisportiva.
+<p align="center">
+  <a href="https://micronaut.io/" target="blank"><img src="https://objectcomputing.com/files/8216/2275/4539/sally_micronaut_mascot.svg" width="200" alt="Micronaut Logos" /></a>
+</p>
+<p align="center"><a href="https://micronaut.io/" target="_blank">Micronaut</a> is a modern, JVM-based, full-stack framework for building modular, easily testable microservice and serverless applications</p> <p align="center">
 
 ## Prerequisiti
 
-<img src="https://logos-download.com/wp-content/uploads/2016/09/Docker_logo.png" alt="Logo Docker" width="90" height="80">
+<img src="https://www.docker.com/wp-content/uploads/2022/03/Docker-Logo-White-RGB_Horizontal.png" alt="Logo Docker" width="300" height="100">
 
-## Avvio dell'applicazione
-
-Per avviare l'applicazione, esegui il seguente comando:
+Per avviare l'applicazione, è necessario eseguire il seguente comando:
 
 ```shell
-docker-compose up --detach
+> docker-compose up --detach
 ```
 Questo comando utilizzerà Docker, in particolare Docker Compose per creare e avviare i container necessari per l'applicazione.
+
+## Monitoraggio del container
+
+Per monitorare il container, in cui l'applicazione è in esecuzione, avviare lo script che esegue il seguente comando:
+
+```shell
+> docker stats
+```
+
+In particolare, aprire Windows PowerShell con privilegi di amministratore e lanciare il seguente comando:
+
+
+```shell
+> Set-ExecutionPolicy RemoteSigned
+```
+
+che permetterà di concedere i permessi di esecuzione di script alla shell.
+
+Dopodichè, lanciare lo script docker-stats.ps1 con il seguente comando:
+
+```shell
+> .\docker-stats.ps1
+```
+
+Questo script genererà un file "stats.csv" in cui saranno scritti dati riguardo l'uso della CPU, della Memoria etc.. dei container in esecuzione.
+
 
 ## Documentazione
 
@@ -72,19 +97,19 @@ Questo comando utilizzerà Docker, in particolare Docker Compose per creare e av
 - [Riferimento di configurazione di Micronaut](https://docs.micronaut.io/3.9.3/guide/configurationreference.html)
 - [Guide di Micronaut](https://guides.micronaut.io/index.html)
 
-## Risorse di test
+[//]: # (## Risorse di test)
 
-- [Documentazione delle risorse di test di Micronaut](https://micronaut-projects.github.io/micronaut-test-resources/latest/guide/)
+[//]: # ()
+[//]: # (- [Documentazione delle risorse di test di Micronaut]&#40;https://micronaut-projects.github.io/micronaut-test-resources/latest/guide/&#41;)
 
-## Client HTTP
+[//]: # ()
+[//]: # (## Client HTTP)
 
-- [Documentazione del client HTTP di Micronaut](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+[//]: # ()
+[//]: # (- [Documentazione del client HTTP di Micronaut]&#40;https://docs.micronaut.io/latest/guide/index.html#httpClient&#41;)
 
-## Supporto OpenAPI
+[//]: # ()
+[//]: # (## JDBC Tomcat)
 
-- [Documentazione del supporto OpenAPI di Micronaut](https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html)
-- [https://www.openapis.org](https://www.openapis.org)
-
-## JDBC Tomcat
-
-- [Documentazione del pool di connessione JDBC Tomcat di Micronaut](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc)
+[//]: # ()
+[//]: # (- [Documentazione del pool di connessione JDBC Tomcat di Micronaut]&#40;https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc&#41;)
